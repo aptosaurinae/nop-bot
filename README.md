@@ -5,3 +5,7 @@ A `token.toml` file is required, with the following format:
 [discord]
 token="my_token_from_discord"
 ```
+
+
+To run the bot navigate to the folder containing the bot and token files and run: 
+`python3 bot.py token.toml`
