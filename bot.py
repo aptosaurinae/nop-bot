@@ -10,11 +10,22 @@ intents.message_content = True
 
 parser = argparse.ArgumentParser(description="Configuration for discord bot")
 parser.add_argument("token_file", type=str, help="Discord Token")
+parser.add_argument("channels_file", type=str, help="Discord Channel Links")
+parser.add_argument("ilvls_file", type=str, help="Itemlevels file for current season")
 args = vars(parser.parse_args())
 with open(args["token_file"], "rb") as token_file:
     token_data = tomllib.load(token_file)
+with open(args["channels_file"], "rb") as channels_file:
+    channel_links = tomllib.load(channels_file)
+with open(args["ilvls_file"], "rb") as ilvls_file:
+    ilvls_data = tomllib.load(ilvls_file)
 
 TOKEN = token_data["discord"]["token"]
+CHANNELS_ROLES = channel_links["roles"]
+CHANNELS_RULES = channel_links["rules"]
+CHANNELS_MODS = channel_links["mods"]
+MPLUS_ILVLS = ilvls_data["mplus"]
+RAID_ILVLS = ilvls_data["raid"]
 
 bot = commands.Bot(
     command_prefix='!',
@@ -51,43 +62,46 @@ def throttled(
 async def ilvl(ctx: commands.Context):
     if not throttled(ctx, "ilvl"):
         if ctx.channel.name == "lfg-m0":
-            response = "The expected ilevel minimum for m0 is 583"
+            response = f"""The expected ilevel minimum for m0 is {MPLUS_ILVLS["m0"]}"""
         elif ctx.channel.name == "lfg-m2-m3":
-            response = "The expected ilevel minimum for m2/3 is 587"
+            response = f"""The expected ilevel minimum for m2 is {MPLUS_ILVLS["m2"]}, and m3 is {MPLUS_ILVLS["m3"]}"""
         elif ctx.channel.name == "lfg-m4-m6":
-            response = "The expected ilevel minimum for m4 is 590, m5 is 593, and m6 is 596"
+            response = f"""The expected ilevel minimum for m4 is {MPLUS_ILVLS["m4"]}, m5 is {MPLUS_ILVLS["m5"]}, and m6 is {MPLUS_ILVLS["m6"]}"""
         elif ctx.channel.name == "lfg-m7-m9":
-            response = "The expected ilevel minimum for m7/8 is 605, and m9 is 608"
+            response = f"""The expected ilevel minimum for m7 is {MPLUS_ILVLS["m7"]}, m8 is {MPLUS_ILVLS["m8"]} and m9 is {MPLUS_ILVLS["m9"]}"""
         elif ctx.channel.name == "lfg-m10":
-            response = "The expected ilevel minimum for m10 is 608"
+            response = f"""The expected ilevel minimum for m10 is {MPLUS_ILVLS["m10"]}"""
         else:
-            response = """The expected ilevel minimums this season are:
-- m0:   583
-- m2/3: 587
-- m4:   590
-- m5:   593
-- m6:   596
-- m7/8: 605
-- m9+:  608
+            response = f"""The expected ilevel minimums this season are:
+- m0:   {MPLUS_ILVLS["m0"]}
+- m2:   {MPLUS_ILVLS["m2"]}
+- m3:   {MPLUS_ILVLS["m3"]}
+- m4:   {MPLUS_ILVLS["m4"]}
+- m5:   {MPLUS_ILVLS["m5"]}
+- m6:   {MPLUS_ILVLS["m6"]}
+- m7:   {MPLUS_ILVLS["m7"]}
+- m8:   {MPLUS_ILVLS["m8"]}
+- m9:   {MPLUS_ILVLS["m9"]}
+- m10:  {MPLUS_ILVLS["m10"]}
         """
         await ctx.send(response)
 
 @bot.command(help='Responds with where to find role self-assignment')
 async def roles(ctx):
     if not throttled(ctx, "roles"):
-        response = """You can self-assign roles in #server-guide / https://discord.com/channels/1292467452688465920/1293172035706556416. Make sure you have emote visibility turned on in the Discord settings."""
+        response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
         await ctx.send(response)
 
 @bot.command(help='Responds with where rules can be found')
 async def rules(ctx):
     if not throttled(ctx, "rules"):
-        response = """Community wide rules are in https://discord.com/channels/1292467452688465920/1293173265073705032 while m+ specific additions are in #get-started-dungeons (see #boiler-info for high key specific exclusions to these)."""
+        response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
         await ctx.send(response)
 
 @bot.command(help='Responds with mod related help')
 async def mods(ctx):
     if not throttled(ctx, "mods"):
-        response = """Please use #contact-mods for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
+        response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
         await ctx.send(response)
 
 bot.run(TOKEN)

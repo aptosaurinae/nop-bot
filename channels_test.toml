@@ -1,0 +1,11 @@
+[roles]
+server_guide = "<id:guide>"
+pick_your_role = "https://discord.com/channels/1292467452688465920/1293172035706556416"
+
+[rules]
+server_rules = "https://discord.com/channels/1292467452688465920/1293173265073705032"
+mplus_rules = "https://discord.com/channels/1292467452688465920/1293301290297982978"
+boiler_info = "https://discord.com/channels/1292467452688465920/1293302099081297970"
+
+[mods]
+contact_mods = "https://discord.com/channels/1292467452688465920/1293301554170040400"
