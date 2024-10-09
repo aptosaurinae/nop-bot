@@ -59,7 +59,7 @@ def throttled(
     last_messages[ctx.channel.name][msg_type] = ctx.message.created_at
     return False
 
-@bot.command(help='Responds with the expected minimum ilvls for the current season')
+@bot.command(help='Expected minimum ilvls for the current season')
 async def ilvl(ctx: commands.Context):
     if not throttled(ctx, "ilvl"):
         if ctx.channel.name == "lfg-m0":
@@ -87,43 +87,43 @@ async def ilvl(ctx: commands.Context):
         """
         await ctx.send(response)
 
-@bot.command(help='Responds with where to find role self-assignment')
+@bot.command(help='Where to find role self-assignment')
 async def roles(ctx):
     if not throttled(ctx, "roles"):
         response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
         await ctx.send(response)
 
-@bot.command(help='Responds with where rules can be found')
+@bot.command(help='Where rules can be found')
 async def rules(ctx):
     if not throttled(ctx, "rules"):
         response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
         await ctx.send(response)
 
-@bot.command(help='Responds with experience requirements for mythic plus dungeons')
+@bot.command(help='Experience requirements for mythic plus dungeons')
 async def mxp(ctx):
     if not throttled(ctx, "mxp"):
         response = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
         await ctx.send(response)
 
-@bot.command(help='Responds with party composition rules')
+@bot.command(help='Party composition rules')
 async def mparty(ctx):
     if not throttled(ctx, "mparty"):
         response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
         await ctx.send(response)
 
-@bot.command(help='Responds with mod related help')
+@bot.command(help='Mod related help')
 async def mods(ctx):
     if not throttled(ctx, "mods"):
         response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
         await ctx.send(response)
 
-@bot.command(help='Responds with information about the guild')
+@bot.command(help='Information about the guild')
 async def guild(ctx):
     if not throttled(ctx, "guild"):
         response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
         await ctx.send(response)
 
-@bot.command(help='Responds with recommended addons')
+@bot.command(help='Recommended addons')
 async def addons(ctx):
     if not throttled(ctx, "addons"):
         response = """The recommended addons for use in NoP are:
