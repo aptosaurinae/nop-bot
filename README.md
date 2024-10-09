@@ -9,7 +9,7 @@ token="my_token_from_discord"
 
 To run the bot navigate to the folder containing the bot and token files and run: 
 ``` shell
-python3 bot.py token.toml channels_test.toml ilvl_tww_s1.toml
+python3 bot.py token.toml channels_nop.toml ilvls_tww_s1.toml
 ```
 The toml files contain:
 - `token.toml` contains a discord token for the bot as above
