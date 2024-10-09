@@ -24,6 +24,7 @@ TOKEN = token_data["discord"]["token"]
 CHANNELS_ROLES = channel_links["roles"]
 CHANNELS_RULES = channel_links["rules"]
 CHANNELS_MODS = channel_links["mods"]
+CHANNELS_GUILD = channel_links["guild"]
 MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
@@ -98,10 +99,39 @@ async def rules(ctx):
         response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
         await ctx.send(response)
 
+@bot.command(help='Responds with experience requirements for mythic plus dungeons')
+async def mxp(ctx):
+    if not throttled(ctx, "mxp"):
+        response = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
+        await ctx.send(response)
+
+@bot.command(help='Responds with experience requirements for mythic plus dungeons')
+async def mdecline(ctx):
+    if not throttled(ctx, "mdecline"):
+        response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
+        await ctx.send(response)
+
 @bot.command(help='Responds with mod related help')
 async def mods(ctx):
     if not throttled(ctx, "mods"):
         response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
+        await ctx.send(response)
+
+@bot.command(help='Responds with information about the guild')
+async def guild(ctx):
+    if not throttled(ctx, "guild"):
+        response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
+        await ctx.send(response)
+
+@bot.command(help='Responds with recommended addons')
+async def addons(ctx):
+    if not throttled(ctx, "addons"):
+        response = """The recommended addons for use in NoP are:
+- `Have We Met?` which will track party members for you
+- `LoggerHead` which allows combat and chat logging automatically on entering specific instances
+- `Warpdeplete` (or similar) to keep track of Mythic Plus dungeon timers and percentages
+- `Mythic Dungeon Tools` to plan out routes through dungeons
+"""
         await ctx.send(response)
 
 bot.run(TOKEN)
