@@ -105,9 +105,9 @@ async def mxp(ctx):
         response = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
         await ctx.send(response)
 
-@bot.command(help='Responds with experience requirements for mythic plus dungeons')
-async def mdecline(ctx):
-    if not throttled(ctx, "mdecline"):
+@bot.command(help='Responds with party composition rules')
+async def mparty(ctx):
+    if not throttled(ctx, "mparty"):
         response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
         await ctx.send(response)
 
