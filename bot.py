@@ -91,11 +91,11 @@ async def ilvl(ctx: commands.Context):
         response = f"""The expected ilevel minimum for m10 is {MPLUS_ILVLS["m10"]}"""
     else:
         response = f"""The ilevel minimums this season are:
-```- m0:   {MPLUS_ILVLS["m0"]}     - m2:   {MPLUS_ILVLS["m2"]}
-- m3:   {MPLUS_ILVLS["m3"]}     - m4:   {MPLUS_ILVLS["m4"]}
-- m5:   {MPLUS_ILVLS["m5"]}     - m6:   {MPLUS_ILVLS["m6"]}
-- m7:   {MPLUS_ILVLS["m7"]}     - m8:   {MPLUS_ILVLS["m8"]}
-- m9:   {MPLUS_ILVLS["m9"]}     - m10:  {MPLUS_ILVLS["m10"]}```
+```- m0:   {MPLUS_ILVLS["m0"]}     - m6:   {MPLUS_ILVLS["m6"]}
+- m2:   {MPLUS_ILVLS["m2"]}     - m7:   {MPLUS_ILVLS["m7"]}
+- m3:   {MPLUS_ILVLS["m3"]}     - m8:   {MPLUS_ILVLS["m8"]}
+- m4:   {MPLUS_ILVLS["m4"]}     - m9:   {MPLUS_ILVLS["m9"]}
+- m5:   {MPLUS_ILVLS["m5"]}     - m10:  {MPLUS_ILVLS["m10"]}```
     """
     await ctx.send(response)
 
