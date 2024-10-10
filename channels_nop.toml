@@ -6,6 +6,7 @@ pick_your_role = "https://discord.com/channels/1055487463734386739/1063229478756
 server_rules = "https://discord.com/channels/1055487463734386739/1180130833487626300"
 mplus_rules = "https://discord.com/channels/1055487463734386739/1290734945156857938"
 boiler_info = "https://discord.com/channels/1055487463734386739/1224353705042907187"
+db = "https://discord.com/channels/1055487463734386739/1225066342106005514"
 
 [mods]
 contact_mods = "https://discord.com/channels/1055487463734386739/1063237446042648618"
