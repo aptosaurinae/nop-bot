@@ -54,20 +54,30 @@ CHANNEL_WHITELIST = [
 COOLDOWN_RATE = 1
 COOLDOWN_PER = 60
 
+help_command = commands.MinimalHelpCommand()
+
 bot = commands.Bot(
     command_prefix='!',
-    intents=intents
+    intents=intents,
+    help_command=None
 )
 
 @bot.check
 def check_commands(ctx: commands.Context):
     return ctx.channel.name in CHANNEL_WHITELIST
 
-cooldown = commands.cooldown(COOLDOWN_RATE, COOLDOWN_PER)
-
 last_messages = {}
 
-@bot.command(help='Expected minimum ilvls for the current season', cooldown=cooldown)
+@bot.command()
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def help(ctx: commands.Context):
+    response = """The following commands are available (prefixed by `!`):
+general: `rules`, `roles`, `guild`, `mods`, `addons`
+dungeons: `ilvl`, `mxp`, `mparty`"""
+    await ctx.send(response)
+
+@bot.command(help='Expected minimum ilvls for the current season')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
     if ctx.channel.name == "lfg-m0":
         response = f"""The expected ilevel minimum for m0 is {MPLUS_ILVLS["m0"]}"""
@@ -80,51 +90,53 @@ async def ilvl(ctx: commands.Context):
     elif ctx.channel.name == "lfg-m10":
         response = f"""The expected ilevel minimum for m10 is {MPLUS_ILVLS["m10"]}"""
     else:
-        response = f"""The expected ilevel minimums this season are:
-- m0:   {MPLUS_ILVLS["m0"]}
-- m2:   {MPLUS_ILVLS["m2"]}
-- m3:   {MPLUS_ILVLS["m3"]}
-- m4:   {MPLUS_ILVLS["m4"]}
-- m5:   {MPLUS_ILVLS["m5"]}
-- m6:   {MPLUS_ILVLS["m6"]}
-- m7:   {MPLUS_ILVLS["m7"]}
-- m8:   {MPLUS_ILVLS["m8"]}
-- m9:   {MPLUS_ILVLS["m9"]}
-- m10:  {MPLUS_ILVLS["m10"]}
+        response = f"""The ilevel minimums this season are:
+```- m0:   {MPLUS_ILVLS["m0"]}     - m2:   {MPLUS_ILVLS["m2"]}
+- m3:   {MPLUS_ILVLS["m3"]}     - m4:   {MPLUS_ILVLS["m4"]}
+- m5:   {MPLUS_ILVLS["m5"]}     - m6:   {MPLUS_ILVLS["m6"]}
+- m7:   {MPLUS_ILVLS["m7"]}     - m8:   {MPLUS_ILVLS["m8"]}
+- m9:   {MPLUS_ILVLS["m9"]}     - m10:  {MPLUS_ILVLS["m10"]}```
     """
     await ctx.send(response)
 
-@bot.command(help='Where to find role self-assignment', cooldown=cooldown)
+@bot.command(help='Where to find role self-assignment')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def roles(ctx: commands.Context):
     response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
     await ctx.send(response)
 
-@bot.command(help='Where rules can be found', cooldown=cooldown)
+@bot.command(help='Where rules can be found')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def rules(ctx: commands.Context):
     response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
     await ctx.send(response)
 
-@bot.command(help='Experience requirements for mythic plus dungeons', cooldown=cooldown)
+@bot.command(help='Experience requirements for mythic plus dungeons')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mxp(ctx: commands.Context):
     response = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
     await ctx.send(response)
 
-@bot.command(help='Party composition rules', cooldown=cooldown)
+@bot.command(help='Party composition rules')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mparty(ctx: commands.Context):
     response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
     await ctx.send(response)
 
-@bot.command(help='Mod related help', cooldown=cooldown)
+@bot.command(help='Mod related help')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mods(ctx: commands.Context):
     response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
     await ctx.send(response)
 
-@bot.command(help='Information about the guild', cooldown=cooldown)
+@bot.command(help='Information about the guild')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def guild(ctx: commands.Context):
     response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
     await ctx.send(response)
 
-@bot.command(help='Recommended addons', cooldown=cooldown)
+@bot.command(help='Recommended addons')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def addons(ctx: commands.Context):
     response = """The recommended addons for use in NoP are:
 - `Have We Met?` which will track party members for you
