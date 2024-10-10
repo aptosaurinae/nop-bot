@@ -28,6 +28,30 @@ CHANNELS_GUILD = channel_links["guild"]
 MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
+CHANNEL_WHITELIST = [
+    "general-chat",
+    "wow-help",
+    "sc-social-club",
+    "tank",
+    "healer",
+    "dps",
+    "profession-goldmaking",
+    "crafting-orders",
+    "dungeons-chat",
+    "lfg-nm-hc-tw",
+    "lfg-m0",
+    "lfg-m2-m3",
+    "lfg-m4-m6",
+    "lfg-m7-m9",
+    "lfg-m10",
+    "raid-chat",
+    "raid-organisation-help",
+    "boiler-mplus-chat",
+    "lfg-m11-m14",
+    "lfg-m15-and-up",
+    "boiler-raid-chat",
+]
+
 bot = commands.Bot(
     command_prefix='!',
     intents=intents
@@ -38,7 +62,7 @@ last_messages = {}
 def throttled(
         ctx: commands.Context,
         msg_type: str,
-        throttle_timer = 30
+        throttle_timer = 60
 ) -> bool:
     """Checks if a previous bot message was sent to the specified channel
     within the global throttle timer
@@ -61,7 +85,7 @@ def throttled(
 
 @bot.command(help='Expected minimum ilvls for the current season')
 async def ilvl(ctx: commands.Context):
-    if not throttled(ctx, "ilvl"):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "ilvl"):
         if ctx.channel.name == "lfg-m0":
             response = f"""The expected ilevel minimum for m0 is {MPLUS_ILVLS["m0"]}"""
         elif ctx.channel.name == "lfg-m2-m3":
@@ -88,44 +112,44 @@ async def ilvl(ctx: commands.Context):
         await ctx.send(response)
 
 @bot.command(help='Where to find role self-assignment')
-async def roles(ctx):
-    if not throttled(ctx, "roles"):
+async def roles(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "roles"):
         response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
         await ctx.send(response)
 
 @bot.command(help='Where rules can be found')
-async def rules(ctx):
-    if not throttled(ctx, "rules"):
+async def rules(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "rules"):
         response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
         await ctx.send(response)
 
 @bot.command(help='Experience requirements for mythic plus dungeons')
-async def mxp(ctx):
-    if not throttled(ctx, "mxp"):
+async def mxp(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "mxp"):
         response = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
         await ctx.send(response)
 
 @bot.command(help='Party composition rules')
-async def mparty(ctx):
-    if not throttled(ctx, "mparty"):
+async def mparty(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "mparty"):
         response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
         await ctx.send(response)
 
 @bot.command(help='Mod related help')
-async def mods(ctx):
-    if not throttled(ctx, "mods"):
+async def mods(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "mods"):
         response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
         await ctx.send(response)
 
 @bot.command(help='Information about the guild')
-async def guild(ctx):
-    if not throttled(ctx, "guild"):
+async def guild(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "guild"):
         response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
         await ctx.send(response)
 
 @bot.command(help='Recommended addons')
-async def addons(ctx):
-    if not throttled(ctx, "addons"):
+async def addons(ctx: commands.Context):
+    if ctx.channel.name in CHANNEL_WHITELIST and not throttled(ctx, "addons"):
         response = """The recommended addons for use in NoP are:
 - `Have We Met?` which will track party members for you
 - `LoggerHead` which allows combat and chat logging automatically on entering specific instances
