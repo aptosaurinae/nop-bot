@@ -49,6 +49,7 @@ CHANNEL_WHITELIST = [
     "lfg-m11-m14",
     "lfg-m15-and-up",
     "boiler-raid-chat",
+    "nop-bot",
 ]
 
 COOLDOWN_RATE = 1
@@ -73,7 +74,25 @@ last_messages = {}
 async def help(ctx: commands.Context):
     response = """The following commands are available (prefixed by `!`):
 general: `rules`, `roles`, `guild`, `mods`, `addons`
-dungeons: `ilvl`, `mxp`, `mparty`"""
+dungeons: `ilvl`, `mxp`, `mparty`, `db`
+For more information on individual commands, use `helpall`"""
+    await ctx.send(response)
+
+@bot.command()
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def helpall(ctx: commands.Context):
+    response = """The following commands are available (prefixed by `!`):
+general:
+- `rules` - a refresher on where you can find various rules
+- `roles` - pointers to where roles can be self-assigned
+- `guild` - a link to the #nop-guild channel and some reminders of requirements to join the guild
+- `mods` - reminders on how you can contact us
+- `addons` - recommended addons for WoW
+dungeons:
+- `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
+- `mxp` - a reminder of the rule about what experience is expected for keys
+- `mparty` - a reminder of the rule about who you can decline from keys
+- `db` - where you can find instructions for the Dungeon Buddy bot"""
     await ctx.send(response)
 
 @bot.command(help='Expected minimum ilvls for the current season')
@@ -135,6 +154,12 @@ async def guild(ctx: commands.Context):
     response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
     await ctx.send(response)
 
+@bot.command(help='Dungeon Buddy instructions')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def db(ctx: commands.Context):
+    response = f"""Dungeon Buddy instructions can be found here: {CHANNELS_RULES["db"]}"""
+    await ctx.send(response)
+
 @bot.command(help='Recommended addons')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def addons(ctx: commands.Context):
@@ -143,6 +168,9 @@ async def addons(ctx: commands.Context):
 - `LoggerHead` which allows combat and chat logging automatically on entering specific instances
 - `Warpdeplete` (or similar) to keep track of Mythic Plus dungeon timers and percentages
 - `Mythic Dungeon Tools` to plan out routes through dungeons
+- `BigWigs` & `LittleWigs` or `Deadly Boss Mods` for raid and dungeon timers
+- `AlterEgo` for tracking m+ and raid progress, and vault completion activities across all your characters
+- `WeeklyKnowledge` for tracking profession knowledge across all your characters
 """
     await ctx.send(response)
 
