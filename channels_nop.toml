@@ -13,3 +13,6 @@ contact_mods = "https://discord.com/channels/1055487463734386739/106323744604264
 
 [guild]
 guild = "https://discord.com/channels/1055487463734386739/1267182548702990377"
+
+[bot]
+feedback = "https://discord.com/channels/1055487463734386739/1293932439382655098"

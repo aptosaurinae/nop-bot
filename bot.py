@@ -24,6 +24,7 @@ CHANNELS_ROLES = channel_links["roles"]
 CHANNELS_RULES = channel_links["rules"]
 CHANNELS_MODS = channel_links["mods"]
 CHANNELS_GUILD = channel_links["guild"]
+CHANNELS_BOT = channel_links["bot"]
 MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
@@ -81,7 +82,7 @@ For more information on individual commands, use `helpall`"""
 @bot.command()
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def helpall(ctx: commands.Context):
-    response = """The following commands are available (prefixed by `!`):
+    response = f"""The following commands are available (prefixed by `!`):
 general:
 - `rules` - a refresher on where you can find various rules
 - `roles` - pointers to where roles can be self-assigned
@@ -92,7 +93,11 @@ dungeons:
 - `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
 - `mxp` - a reminder of the rule about what experience is expected for keys
 - `mparty` - a reminder of the rule about who you can decline from keys
-- `db` - where you can find instructions for the Dungeon Buddy bot"""
+- `db` - where you can find instructions for the Dungeon Buddy bot
+
+-# feedback for the bot can be given in {CHANNELS_BOT["feedback"]}"""
+
+
     await ctx.send(response)
 
 @bot.command(help='Expected minimum ilvls for the current season')
