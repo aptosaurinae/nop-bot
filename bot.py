@@ -1,6 +1,7 @@
 # bot.py
 import argparse
 import tomllib
+from datetime import timedelta
 import discord
 from discord.ext import commands
 
@@ -55,8 +56,7 @@ CHANNEL_WHITELIST = [
 
 COOLDOWN_RATE = 1
 COOLDOWN_PER = 60
-
-help_command = commands.MinimalHelpCommand()
+COOLDOWN_PER_MEME = 300
 
 bot = commands.Bot(
     command_prefix='!',
@@ -68,13 +68,13 @@ bot = commands.Bot(
 def check_commands(ctx: commands.Context):
     return ctx.channel.name in CHANNEL_WHITELIST
 
-last_messages = {}
+# --- Help
 
 @bot.command()
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def help(ctx: commands.Context):
     response = """The following commands are available (prefixed by `!`):
-general: `rules`, `roles`, `guild`, `mods`, `addons`
+general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`
 dungeons: `ilvl`, `mxp`, `mparty`, `db`
 For more information on individual commands, use `helpall`"""
     await ctx.send(response)
@@ -86,9 +86,10 @@ async def helpall(ctx: commands.Context):
 general:
 - `rules` - a refresher on where you can find various rules
 - `roles` - pointers to where roles can be self-assigned
-- `guild` - a link to the #nop-guild channel and some reminders of requirements to join the guild
+- `guild` - a link to the {CHANNELS_GUILD["guild"]} channel and some reminders of requirements to join the guild
 - `mods` - reminders on how you can contact us
 - `addons` - recommended addons for WoW
+- `website` - a link to the No Pressure website
 dungeons:
 - `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
 - `mxp` - a reminder of the rule about what experience is expected for keys
@@ -96,9 +97,55 @@ dungeons:
 - `db` - where you can find instructions for the Dungeon Buddy bot
 
 -# feedback for the bot can be given in {CHANNELS_BOT["feedback"]}"""
-
-
     await ctx.send(response)
+
+# --- General
+
+@bot.command(help='Where to find role self-assignment')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def roles(ctx: commands.Context):
+    response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
+    await ctx.send(response)
+
+@bot.command(help='Where rules can be found')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def rules(ctx: commands.Context):
+    response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
+    await ctx.send(response)
+
+@bot.command(help='Mod related help')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def mods(ctx: commands.Context):
+    response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
+    await ctx.send(response)
+
+@bot.command(help='Information about the guild')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def guild(ctx: commands.Context):
+    response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
+    await ctx.send(response)
+
+@bot.command(help='Recommended addons')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def addons(ctx: commands.Context):
+    response = """The recommended addons for use in NoP are:
+- `Have We Met?` which will track party members for you
+- `LoggerHead` which allows combat and chat logging automatically on entering specific instances
+- `Warpdeplete` (or similar) to keep track of Mythic Plus dungeon timers and percentages
+- `Mythic Dungeon Tools` to plan out routes through dungeons
+- `BigWigs` & `LittleWigs` or `Deadly Boss Mods` for raid and dungeon timers
+- `AlterEgo` for tracking m+ and raid progress, and vault completion activities across all your characters
+- `WeeklyKnowledge` for tracking profession knowledge across all your characters
+"""
+    await ctx.send(response)
+
+@bot.command(help='Website information')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def website(ctx: commands.Context):
+    response = """The NoP website can be found at [www.no-pressure.eu](https://www.no-pressure.eu)"""
+    await ctx.send(response)
+
+# --- Dungeons
 
 @bot.command(help='Expected minimum ilvls for the current season')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
@@ -123,18 +170,6 @@ async def ilvl(ctx: commands.Context):
     """
     await ctx.send(response)
 
-@bot.command(help='Where to find role self-assignment')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def roles(ctx: commands.Context):
-    response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
-    await ctx.send(response)
-
-@bot.command(help='Where rules can be found')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def rules(ctx: commands.Context):
-    response = f"""Community wide rules are in {CHANNELS_RULES["server_rules"]} while m+ specific additions are in {CHANNELS_RULES["mplus_rules"]} (see {CHANNELS_RULES["boiler_info"]} for high key specific exclusions to these)."""
-    await ctx.send(response)
-
 @bot.command(help='Experience requirements for mythic plus dungeons')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mxp(ctx: commands.Context):
@@ -147,36 +182,38 @@ async def mparty(ctx: commands.Context):
     response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
     await ctx.send(response)
 
-@bot.command(help='Mod related help')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def mods(ctx: commands.Context):
-    response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
-    await ctx.send(response)
-
-@bot.command(help='Information about the guild')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def guild(ctx: commands.Context):
-    response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
-    await ctx.send(response)
-
 @bot.command(help='Dungeon Buddy instructions')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def db(ctx: commands.Context):
     response = f"""Dungeon Buddy instructions can be found here: {CHANNELS_RULES["db"]}"""
     await ctx.send(response)
 
-@bot.command(help='Recommended addons')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def addons(ctx: commands.Context):
-    response = """The recommended addons for use in NoP are:
-- `Have We Met?` which will track party members for you
-- `LoggerHead` which allows combat and chat logging automatically on entering specific instances
-- `Warpdeplete` (or similar) to keep track of Mythic Plus dungeon timers and percentages
-- `Mythic Dungeon Tools` to plan out routes through dungeons
-- `BigWigs` & `LittleWigs` or `Deadly Boss Mods` for raid and dungeon timers
-- `AlterEgo` for tracking m+ and raid progress, and vault completion activities across all your characters
-- `WeeklyKnowledge` for tracking profession knowledge across all your characters
-"""
+# --- Memes
+
+@bot.command(help='Gold!')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER_MEME, type=commands.BucketType.guild)
+async def gold(ctx: commands.Context):
+    response = """Maybe <@116233340977152004> can lend you some"""
     await ctx.send(response)
+
+@bot.command(help='Get me a cuppa')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER_MEME, type=commands.BucketType.guild)
+async def tea(ctx: commands.Context):
+    response = f"""*pours {ctx.author.display_name} a cup of tea*"""
+    await ctx.send(response)
+
+@bot.command(help='Bans someone?')
+@commands.cooldown(rate=COOLDOWN_RATE, per=3600, type=commands.BucketType.guild)
+async def ban(ctx: commands.Context):
+    response = """Time for a ban!"""
+    poll = discord.Poll(
+        question=f"How long should we ban {ctx.author.display_name} for?",
+        duration=timedelta(hours=1)) # discord polls have to be in whole-number hours
+    poll.add_answer(text="5 minutes")
+    poll.add_answer(text="1 hour")
+    poll.add_answer(text="Forever")
+    await ctx.send(response, poll=poll)
+
+# ---
 
 bot.run(TOKEN)
