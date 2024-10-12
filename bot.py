@@ -11,21 +11,25 @@ intents.message_content = True
 parser = argparse.ArgumentParser(description="Configuration for discord bot")
 parser.add_argument("token_file", type=str, help="Discord Token")
 parser.add_argument("channels_file", type=str, help="Discord Channel Links")
+parser.add_argument("help_file", type=str, help="Help descriptions")
 parser.add_argument("ilvls_file", type=str, help="Itemlevels file for current season")
 args = vars(parser.parse_args())
 with open(args["token_file"], "rb") as token_file:
     token_data = tomllib.load(token_file)
 with open(args["channels_file"], "rb") as channels_file:
     channel_links = tomllib.load(channels_file)
+with open(args["help_file"], "rb") as help_file:
+    help_data = tomllib.load(help_file)
 with open(args["ilvls_file"], "rb") as ilvls_file:
     ilvls_data = tomllib.load(ilvls_file)
 
 TOKEN = token_data["discord"]["token"]
-CHANNELS_ROLES = channel_links["roles"]
+CHANNELS_GENERAL = channel_links["general"]
 CHANNELS_RULES = channel_links["rules"]
-CHANNELS_MODS = channel_links["mods"]
-CHANNELS_GUILD = channel_links["guild"]
 CHANNELS_BOT = channel_links["bot"]
+CHANNELS_RAID = channel_links["raids"]
+CHANNELS_DUNGEONS = channel_links["dungeons"]
+HELP_STRINGS = help_data["help"]
 MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
@@ -71,40 +75,35 @@ def check_commands(ctx: commands.Context):
 # --- Help
 
 @bot.command()
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+# @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def help(ctx: commands.Context):
-    response = """The following commands are available (prefixed by `!`):
-general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`
-dungeons: `ilvl`, `mxp`, `mparty`, `db`
-For more information on individual commands, use `helpall`"""
+    response = [HELP_STRINGS["prefix"]]
+    # if len(ctx.args) == 0:
+    #     response.append(HELP_STRINGS["short"])
+    # else:
+    #     for item in ctx.args:
+    #         if item in HELP_STRINGS:
+    #             response.append(HELP_STRINGS[item])
+    response.append(HELP_STRINGS["short"])
+    response.append(HELP_STRINGS["suffix"])
+    response = "\n".join(response)
     await ctx.send(response)
 
 @bot.command()
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+# @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def helpall(ctx: commands.Context):
-    response = f"""The following commands are available (prefixed by `!`):
-general:
-- `rules` - a refresher on where you can find various rules
-- `roles` - pointers to where roles can be self-assigned
-- `guild` - a link to the {CHANNELS_GUILD["guild"]} channel and some reminders of requirements to join the guild
-- `mods` - reminders on how you can contact us
-- `addons` - recommended addons for WoW
-- `website` - a link to the No Pressure website
-dungeons:
-- `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
-- `mxp` - a reminder of the rule about what experience is expected for keys
-- `mparty` - a reminder of the rule about who you can decline from keys
-- `db` - where you can find instructions for the Dungeon Buddy bot
-
--# feedback for the bot can be given in {CHANNELS_BOT["feedback"]}"""
-    await ctx.send(response)
+    response = [HELP_STRINGS["prefix"], HELP_STRINGS["general"], HELP_STRINGS["dungeons"], HELP_STRINGS["raids"], HELP_STRINGS["suffix"]]
+    response = "\n".join(response)
+    await ctx.author.create_dm()
+    await ctx.author.dm_channel.send(response)
+    await ctx.send(f"{ctx.author.display_name} please check your DMs for a full help list")
 
 # --- General
 
 @bot.command(help='Where to find role self-assignment')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def roles(ctx: commands.Context):
-    response = f"""You can self-assign roles in {CHANNELS_ROLES["server_guide"]} / {CHANNELS_ROLES["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
+    response = f"""You can self-assign roles in {CHANNELS_GENERAL["server_guide"]} / {CHANNELS_GENERAL["pick_your_role"]}. Make sure you have emote visibility turned on in the Discord settings."""
     await ctx.send(response)
 
 @bot.command(help='Where rules can be found')
@@ -116,13 +115,13 @@ async def rules(ctx: commands.Context):
 @bot.command(help='Mod related help')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mods(ctx: commands.Context):
-    response = f"""Please use {CHANNELS_MODS["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
+    response = f"""Please use {CHANNELS_GENERAL["contact_mods"]} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
     await ctx.send(response)
 
 @bot.command(help='Information about the guild')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def guild(ctx: commands.Context):
-    response = f"""The NoP guild information can be found in the {CHANNELS_GUILD["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
+    response = f"""The NoP guild information can be found in the {CHANNELS_GENERAL["guild"]} channel. If you have been declined please make sure you don't already have a character in the guild, and that you've been a NoP member for a month."""
     await ctx.send(response)
 
 @bot.command(help='Recommended addons')
@@ -143,6 +142,14 @@ async def addons(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def website(ctx: commands.Context):
     response = """The NoP website can be found at [www.no-pressure.eu](https://www.no-pressure.eu)"""
+    await ctx.send(response)
+
+@bot.command(help='Recruitment discord link')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def recruitmentdiscord(ctx: commands.Context):
+    response = """The recruitment discord can be found [here](https://discord.gg/jx8CXHP)
+
+-# Your experience on linked Discords is not managed by <No Pressure - EU>. <No Pressure - EU> will not be held liable for any interactions, positive or negative, you have on other Discord Servers. Linking to an external Discord Server does not consitute an endorsement by the <No Pressure - EU> Moderation Team for any conduct on such server. Browse at your own risk."""
     await ctx.send(response)
 
 # --- Dungeons
@@ -182,10 +189,24 @@ async def mparty(ctx: commands.Context):
     response = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
     await ctx.send(response)
 
-@bot.command(help='Dungeon Buddy instructions')
+@bot.command(aliases=["db", "buddy"], help='Dungeon Buddy instructions')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def db(ctx: commands.Context):
-    response = f"""Dungeon Buddy instructions can be found here: {CHANNELS_RULES["db"]}"""
+async def lfg(ctx: commands.Context):
+    response = f"""We recommend you review the {CHANNELS_DUNGEONS["get_started"]} before finding groups in NoP. Dungeon Buddy instructions can be found in {CHANNELS_DUNGEONS["db"]}."""
+    await ctx.send(response)
+
+# --- Raids
+
+@bot.command(help='How to join raids')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def raidjoin(ctx: commands.Context):
+    response = f"""You can find instructions on how to get started with raids in {CHANNELS_RAID["get_started"]}, and sign up to raids in {CHANNELS_RAID["norm_hero"]}. Mythic raids can be found in {CHANNELS_RAID["mythic"]}"""
+    await ctx.send(response)
+
+@bot.command(help='How to set up raids')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def raidsetup(ctx: commands.Context):
+    response = f"""We are always looking for more raid organisers! You can find instructions on how to set up raids in {CHANNELS_RAID["get_started"]}, or if you need more help with setting up a raid helper post then you can use {CHANNELS_RAID["organisation"]} for discussion"""
     await ctx.send(response)
 
 # --- Memes
@@ -209,8 +230,8 @@ async def ban(ctx: commands.Context):
     poll = discord.Poll(
         question=f"How long should we ban {ctx.author.display_name} for?",
         duration=timedelta(hours=1)) # discord polls have to be in whole-number hours
-    poll.add_answer(text="5 minutes")
     poll.add_answer(text="1 hour")
+    poll.add_answer(text="1 day")
     poll.add_answer(text="Forever")
     await ctx.send(response, poll=poll)
 
