@@ -94,7 +94,7 @@ async def roles(ctx: commands.Context):
 async def rules(ctx: commands.Context):
     await ctx.send(GENERAL["rules"])
 
-@bot.command(help='Mod related help')
+@bot.command(aliases=["report"], help='Mod related help')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mods(ctx: commands.Context):
     await ctx.send(GENERAL["mods"])
@@ -107,7 +107,7 @@ async def guild(ctx: commands.Context):
 @bot.command(help='Recommended addons')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def addons(ctx: commands.Context):
-    await ctx.send(GENERAL["addons"])
+    await ctx.send(GENERAL["addons"], suppress_embeds=True)
 
 @bot.command(help='Website information')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
@@ -129,6 +129,11 @@ async def newuser(ctx: commands.Context):
 async def newshort(ctx: commands.Context):
     await ctx.send(GENERAL["newuser_short"])
 
+@bot.command(aliases=["craftingorders", "craftserver"], help='Information on placing crafting orders in NoP')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def craft(ctx: commands.Context):
+    await ctx.send(GENERAL["craft"])
+
 # --- Dungeons
 
 @bot.command(help='Expected minimum ilvls for the current season')
@@ -137,11 +142,11 @@ async def ilvl(ctx: commands.Context):
     if ctx.channel.name == "lfg-m0":
         response = DUNGEONS["ilvl_m0"]
     elif ctx.channel.name == "lfg-m2-m3":
-        response = DUNGEONS["ilvl_m2"]
+        response = DUNGEONS["ilvl_m2-m3"]
     elif ctx.channel.name == "lfg-m4-m6":
-        response = DUNGEONS["ilvl_m4"]
+        response = DUNGEONS["ilvl_m4-m6"]
     elif ctx.channel.name == "lfg-m7-m9":
-        response = DUNGEONS["ilvl_m7"]
+        response = DUNGEONS["ilvl_m7-m9"]
     elif ctx.channel.name == "lfg-m10":
         response = DUNGEONS["ilvl_m10"]
     else:
