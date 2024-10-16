@@ -140,15 +140,15 @@ async def craft(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
     if ctx.channel.name == "lfg-m0":
-        response = f"{DUNGEONS["ilvl_m0"]}"
+        response = f'{DUNGEONS["ilvl_m0"]}'
     elif ctx.channel.name == "lfg-m2-m3":
-        response = f"{DUNGEONS["ilvl_m2-m3"]}\n{DUNGEONS["ilvl_channel_addendum"]}"
+        response = f'{DUNGEONS["ilvl_m2-m3"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
     elif ctx.channel.name == "lfg-m4-m6":
-        response = f"{DUNGEONS["ilvl_m4-m6"]}\n{DUNGEONS["ilvl_channel_addendum"]}"
+        response = f'{DUNGEONS["ilvl_m4-m6"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
     elif ctx.channel.name == "lfg-m7-m9":
-        response = f"{DUNGEONS["ilvl_m7-m9"]}\n{DUNGEONS["ilvl_channel_addendum"]}"
+        response = f'{DUNGEONS["ilvl_m7-m9"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
     elif ctx.channel.name == "lfg-m10":
-        response = f"{DUNGEONS["ilvl_m10"]}\n{DUNGEONS["ilvl_channel_addendum"]}"
+        response = f'{DUNGEONS["ilvl_m10"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
     else:
         response = DUNGEONS["ilvl_general"]
     await ctx.send(response)
