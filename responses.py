@@ -111,6 +111,8 @@ dungeons["ilvl_m10"] = f"""The expected ilevel minimum for m10 is {MPLUS_ILVLS["
 
 This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the *minimum* we expect people to be for these dungeons. This is the same ilvl as m9 due to the loot drops being the same, but note that the 9 to 10 key jump has double-scaling due to both the normal 10% key level jump and the introduction of the missing tyrannical or fortified affix so **be prepared** for there to be a big difference in health of mobs and damage taken."""
 
+dungeons["ilvl_channel_addendum"] = "-# Note that a minimum ilvl is not the only rule when forming mythic plus groups, see `!rules`, or `!mxp` / `!mparty` for details"
+
 dungeons["xp"] = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
 
 dungeons["party"] = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
