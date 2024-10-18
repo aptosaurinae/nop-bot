@@ -8,7 +8,7 @@ with open(ilvls_file, "rb") as ilvls_file:
 MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
-channel_server_guide = "<id:guide>"
+channel_channels_and_roles = "<id:customize>"
 channel_pick_your_role = "https://discord.com/channels/1055487463734386739/1063229478756696164"
 channel_contact_mods = "https://discord.com/channels/1055487463734386739/1063237446042648618"
 channel_guild = "https://discord.com/channels/1055487463734386739/1267182548702990377"
@@ -64,7 +64,7 @@ raids: `raidjoin`, `raidsetup`"""
 # ---
 general = {}
 
-general["roles"] = f"""You can self-assign roles in {channel_server_guide} / {channel_pick_your_role}. Make sure you have emote visibility turned on in the Discord settings."""
+general["roles"] = f"""You can customise channels and self-assign roles in {channel_channels_and_roles} / {channel_pick_your_role}. Make sure you have emote visibility turned on in the Discord settings."""
 
 general["rules"] = f"""Community wide rules are in {channel_rules_server} while m+ specific additions are in {channel_rules_mplus} (see {channel_rules_boiler} for high key specific exclusions to these)."""
 
@@ -133,8 +133,8 @@ general["newuser"] = f"""Welcome to No Pressure!
 - {general["roles"]}
 - {dungeons["lfg"]}
 - {raids["join"]}
--# {general["mods"]}"""
+-# - {general["mods"]}"""
 
 general["newuser_short"] = f"""- {dungeons["lfg"]}
 - {raids["join"]}
--# {general["mods"]}"""
+-# - {general["mods"]}"""

@@ -140,17 +140,18 @@ async def craft(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
     if ctx.channel.name == "lfg-m0":
-        response = f'{DUNGEONS["ilvl_m0"]}'
+        response = DUNGEONS["ilvl_m0"]
     elif ctx.channel.name == "lfg-m2-m3":
-        response = f'{DUNGEONS["ilvl_m2-m3"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
+        response = DUNGEONS["ilvl_m2-m3"]
     elif ctx.channel.name == "lfg-m4-m6":
-        response = f'{DUNGEONS["ilvl_m4-m6"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
+        response = DUNGEONS["ilvl_m4-m6"]
     elif ctx.channel.name == "lfg-m7-m9":
-        response = f'{DUNGEONS["ilvl_m7-m9"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
+        response = DUNGEONS["ilvl_m7-m9"]
     elif ctx.channel.name == "lfg-m10":
-        response = f'{DUNGEONS["ilvl_m10"]}\n{DUNGEONS["ilvl_channel_addendum"]}'
+        response = DUNGEONS["ilvl_m10"]
     else:
         response = DUNGEONS["ilvl_general"]
+    response = f'response\n{DUNGEONS["ilvl_channel_addendum"]}'
     await ctx.send(response)
 
 @bot.command(help='Experience requirements for mythic plus dungeons')
