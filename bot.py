@@ -151,7 +151,7 @@ async def ilvl(ctx: commands.Context):
         response = DUNGEONS["ilvl_m10"]
     else:
         response = DUNGEONS["ilvl_general"]
-    response = f'response\n{DUNGEONS["ilvl_channel_addendum"]}'
+    response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
     await ctx.send(response)
 
 @bot.command(help='Experience requirements for mythic plus dungeons')
