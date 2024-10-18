@@ -129,7 +129,7 @@ async def newuser(ctx: commands.Context):
 async def newshort(ctx: commands.Context):
     await ctx.send(GENERAL["newuser_short"])
 
-@bot.command(aliases=["craftingorders", "craftserver"], help='Information on placing crafting orders in NoP')
+@bot.command(aliases=["craftingorders", "craftingorder", "craftserver", "craftorder", "craftorders"], help='Information on placing crafting orders in NoP')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def craft(ctx: commands.Context):
     await ctx.send(GENERAL["craft"])
