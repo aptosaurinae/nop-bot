@@ -61,7 +61,12 @@ bot = commands.Bot(
 
 @bot.check
 def check_commands(ctx: commands.Context):
-    return ctx.channel.name in CHANNEL_WHITELIST
+    return type(ctx.channel) is discord.channel.DMChannel or (type(ctx.channel) is discord.channel.TextChannel and ctx.channel.name in CHANNEL_WHITELIST)
+
+def not_dm():
+    def predicate(ctx):
+        return type(ctx.channel) is not discord.channel.DMChannel
+    return commands.check(predicate)
 
 # --- Help
 
@@ -139,16 +144,19 @@ async def craft(ctx: commands.Context):
 @bot.command(help='Expected minimum ilvls for the current season')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
-    if ctx.channel.name == "lfg-m0":
-        response = DUNGEONS["ilvl_m0"]
-    elif ctx.channel.name == "lfg-m2-m3":
-        response = DUNGEONS["ilvl_m2-m3"]
-    elif ctx.channel.name == "lfg-m4-m6":
-        response = DUNGEONS["ilvl_m4-m6"]
-    elif ctx.channel.name == "lfg-m7-m9":
-        response = DUNGEONS["ilvl_m7-m9"]
-    elif ctx.channel.name == "lfg-m10":
-        response = DUNGEONS["ilvl_m10"]
+    if type(ctx.channel) is discord.channel.TextChannel:
+        if ctx.channel.name == "lfg-m0":
+            response = DUNGEONS["ilvl_m0"]
+        elif ctx.channel.name == "lfg-m2-m3":
+            response = DUNGEONS["ilvl_m2-m3"]
+        elif ctx.channel.name == "lfg-m4-m6":
+            response = DUNGEONS["ilvl_m4-m6"]
+        elif ctx.channel.name == "lfg-m7-m9":
+            response = DUNGEONS["ilvl_m7-m9"]
+        elif ctx.channel.name == "lfg-m10":
+            response = DUNGEONS["ilvl_m10"]
+        else:
+            response = DUNGEONS["ilvl_general"]
     else:
         response = DUNGEONS["ilvl_general"]
     response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
@@ -184,18 +192,21 @@ async def raidsetup(ctx: commands.Context):
 # --- Memes
 
 @bot.command(help='Gold!')
+@not_dm()
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER_MEME, type=commands.BucketType.guild)
 async def gold(ctx: commands.Context):
     response = """Maybe <@116233340977152004> can lend you some"""
     await ctx.send(response)
 
 @bot.command(help='Get me a cuppa')
+@not_dm()
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER_MEME, type=commands.BucketType.guild)
 async def tea(ctx: commands.Context):
     response = f"""*pours {ctx.author.display_name} a cup of tea*"""
     await ctx.send(response)
 
 @bot.command(help='Bans someone?')
+@not_dm()
 @commands.cooldown(rate=COOLDOWN_RATE, per=3600, type=commands.BucketType.guild)
 async def ban(ctx: commands.Context):
     response = """Time for a ban!"""

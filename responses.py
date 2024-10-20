@@ -66,7 +66,7 @@ general = {}
 
 general["roles"] = f"""You can customise channels and self-assign roles in {channel_channels_and_roles} / {channel_pick_your_role}. Make sure you have emote visibility turned on in the Discord settings."""
 
-general["rules"] = f"""Community wide rules are in {channel_rules_server} while m+ specific additions are in {channel_rules_mplus} (see {channel_rules_boiler} for high key specific exclusions to these)."""
+general["rules"] = f"""Community wide rules can be found in {channel_rules_server} while m+ specific additions can be found in {channel_rules_mplus} (see {channel_rules_boiler} for high key specific exclusions to these)."""
 
 general["mods"] = f"""Please use {channel_contact_mods} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
 
