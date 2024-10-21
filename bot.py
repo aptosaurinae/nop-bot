@@ -177,6 +177,11 @@ async def mparty(ctx: commands.Context):
 async def lfg(ctx: commands.Context):
     await ctx.send(DUNGEONS["lfg"])
 
+@bot.command(aliases=["completion"], help='Information on whether to pick Time or Completion for key posts')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def time(ctx: commands.Context):
+    await ctx.send(DUNGEONS["time"])
+
 # --- Raids
 
 @bot.command(help='How to join raids')

@@ -22,6 +22,7 @@ channel_bot_feedback = "https://discord.com/channels/1055487463734386739/1293932
 
 channel_dungeon_get_started = "https://discord.com/channels/1055487463734386739/1225062828470173706"
 channel_dungeon_buddy = "https://discord.com/channels/1055487463734386739/1225066342106005514"
+channel_dungeon_time_complete = "https://discord.com/channels/1055487463734386739/1297972027063537705"
 
 channel_raid_get_started = "https://discord.com/channels/1055487463734386739/1225062863073312849"
 channel_raid_organisation = "https://discord.com/channels/1055487463734386739/1065196123108679700"
@@ -118,6 +119,8 @@ dungeons["xp"] = """Applications to keys where your experience in that dungeon i
 dungeons["party"] = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
 
 dungeons["lfg"] = f"""We recommend you review the {channel_dungeon_get_started} before finding dungeon groups in NoP. Dungeon Buddy instructions can be found in {channel_dungeon_buddy}."""
+
+dungeons["time"] = f"""If you aren't sure about whether to choose `Time` or `Completion` on your buddy key, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` to set your expectations!"""
 
 # ---
 raids = {}
