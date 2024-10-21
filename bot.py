@@ -141,7 +141,7 @@ async def craft(ctx: commands.Context):
 
 # --- Dungeons
 
-@bot.command(help='Expected minimum ilvls for the current season')
+@bot.command(aliases=["ilevel", "itemlevel"], help='Expected minimum ilvls for the current season')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
     if type(ctx.channel) is discord.channel.TextChannel:
