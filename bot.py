@@ -1,6 +1,7 @@
 # bot.py
+try: import tomllib
+except ModuleNotFoundError: import pip._vendor.tomli as tomllib
 import argparse
-import tomllib
 from datetime import timedelta
 import discord
 from discord.ext import commands
@@ -181,6 +182,11 @@ async def lfg(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def time(ctx: commands.Context):
     await ctx.send(DUNGEONS["time"])
+
+@bot.command(aliases=["dungeontemplate"], help='Looking for Group non-dungeon-buddy template')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def lfgtemplate(ctx: commands.Context):
+    await ctx.send(DUNGEONS["lfgtemplate"])
 
 # --- Raids
 

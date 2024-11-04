@@ -1,5 +1,6 @@
 # response strings for the bot
-import tomllib
+try: import tomllib
+except ModuleNotFoundError: import pip._vendor.tomli as tomllib
 
 ilvls_file = "ilvls_tww_s1.toml"
 with open(ilvls_file, "rb") as ilvls_file:
@@ -52,14 +53,15 @@ help["dungeons"] = """dungeons:
 - `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
 - `mxp` - a reminder of the rule about what experience is expected for keys
 - `mparty` - a reminder of the rule about who you can decline from keys
-- `lfg` - where you can find instructions on how to join dungeons and use the dungeon buddy"""
+- `lfg` - where you can find instructions on how to join dungeons and use the dungeon buddy
+- `lfgtemplate` - a template for dungeon groups when not using the buddy"""
 
 help["raids"] = """raids:
 - `raidjoin` - where to find information about joining raids
 - `raidsetup` - where to find information about setting up raids"""
 
 help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `recruitmentdiscord`, `newuser`, `newshort`, `craft`
-- dungeons: `ilvl`, `mxp`, `mparty`, `lfg`
+- dungeons: `ilvl`, `mxp`, `mparty`, `lfg`, `lfgtemplate`
 - raids: `raidjoin`, `raidsetup`"""
 
 # ---
@@ -116,11 +118,25 @@ dungeons["ilvl_channel_addendum"] = "-# - Note that a minimum ilvl is not the on
 
 dungeons["xp"] = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
 
-dungeons["party"] = """This is a learning community first and foremost, not a pushing community. Declining for party composition reasons is only valid if you want the final player to bring bloodlust (and please decline people kindly if this is the case in line with server rule #1)."""
+dungeons["party"] = f"""- This is a learning community first and foremost, not a pushing community, but part of learning m+ is understanding how to have a balanced composition for your group. Declining for party composition is allowed but under the following stipulations:
+  - You are fully up-front about the requirements you have.
+  - You are asking for something that can be provided by multiple classes.
+-# You can get further information at {channel_rules_mplus}"""
 
 dungeons["lfg"] = f"""We recommend you review the {channel_dungeon_get_started} before finding dungeon groups in NoP. Dungeon Buddy instructions can be found in {channel_dungeon_buddy}."""
 
 dungeons["time"] = f"""If you aren't sure about whether to choose `Time` or `Completion` on your buddy key, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` to set your expectations!"""
+
+dungeons["lfgtemplate"] = f"""When not using Dungeon Buddy, please try and get discord names for each player.
+```
+- Group Name:
+- Dungeon & difficulty:
+- Timing expectations:
+- Looking for:
+- Specific Requirements:
+- Password:
+```
+"""
 
 # ---
 raids = {}
