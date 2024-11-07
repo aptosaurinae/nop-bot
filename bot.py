@@ -1,6 +1,8 @@
 # bot.py
-try: import tomllib
-except ModuleNotFoundError: import pip._vendor.tomli as tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import pip._vendor.tomli as tomllib
 import argparse
 from datetime import timedelta
 import discord
@@ -51,7 +53,7 @@ CHANNEL_WHITELIST = [
 
 COOLDOWN_RATE = 1
 COOLDOWN_HELP = 5
-COOLDOWN_PER = 60
+COOLDOWN_PER = 120
 COOLDOWN_PER_MEME = 300
 
 bot = commands.Bot(
@@ -120,10 +122,10 @@ async def addons(ctx: commands.Context):
 async def website(ctx: commands.Context):
     await ctx.send(GENERAL["website"])
 
-@bot.command(help='Recruitment discord link')
+@bot.command(aliases=['recruitment','recruitmentdiscord'],help='Links to recruitment areas')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def recruitmentdiscord(ctx: commands.Context):
-    await ctx.send(GENERAL["recruitmentdiscord"])
+async def lfteam(ctx: commands.Context):
+    await ctx.send(GENERAL["lfteam"])
 
 @bot.command(help='Provides the `rules`, `roles`, `lfg` and `raidjoin` commands in one response')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
@@ -139,6 +141,11 @@ async def newshort(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def craft(ctx: commands.Context):
     await ctx.send(GENERAL["craft"])
+
+@bot.command(aliases=["wayfarersrefuge", "nadiscord", "wayfarers"], help='Link to The Wayfarers Refuge North America discord')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def twr(ctx: commands.Context):
+    await ctx.send(GENERAL["wayfarers"])
 
 # --- Dungeons
 
@@ -190,7 +197,7 @@ async def lfgtemplate(ctx: commands.Context):
 
 # --- Raids
 
-@bot.command(help='How to join raids')
+@bot.command(aliases=["raid"], help='How to join raids')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def raidjoin(ctx: commands.Context):
     await ctx.send(RAIDS["join"])

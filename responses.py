@@ -1,6 +1,8 @@
 # response strings for the bot
-try: import tomllib
-except ModuleNotFoundError: import pip._vendor.tomli as tomllib
+try:
+   import tomllib
+except ModuleNotFoundError:
+   import pip._vendor.tomli as tomllib
 
 ilvls_file = "ilvls_tww_s1.toml"
 with open(ilvls_file, "rb") as ilvls_file:
@@ -30,6 +32,9 @@ channel_raid_organisation = "https://discord.com/channels/1055487463734386739/10
 channel_raid_norm_hero = "https://discord.com/channels/1055487463734386739/1065699417342099486"
 channel_raid_mythic = "https://discord.com/channels/1055487463734386739/1224353658926272522"
 
+channel_lf_mplus = "https://discord.com/channels/1055487463734386739/1225099807245467688"
+channel_lf_raid = "https://discord.com/channels/1055487463734386739/1283124807851839531"
+
 # ---
 help = {}
 
@@ -44,10 +49,11 @@ help["general"] = f"""general:
 - `mods` - reminders on how you can contact us
 - `addons` - recommended addons for WoW
 - `website` - a link to the No Pressure website
-- `recruitmentdiscord` - a link to the WoW recruitment EU discord
+- `lfteam` - a link to where to find recruitment resources including the WoW recruitment EU discord
 - `newuser` - provides the `rules`, `roles`, `lfg`, and `raidjoin` commands in one
 - `newshort` - provides the `lfg`, and `raidjoin` commands in one
-- `craft` - provides info on placing crafting orders in NoP"""
+- `craft` - provides info on placing crafting orders in NoP
+- `twr` - provides a link to The Wayfarer's Rest North American discord"""
 
 help["dungeons"] = """dungeons:
 - `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
@@ -60,7 +66,7 @@ help["raids"] = """raids:
 - `raidjoin` - where to find information about joining raids
 - `raidsetup` - where to find information about setting up raids"""
 
-help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `recruitmentdiscord`, `newuser`, `newshort`, `craft`
+help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `lfteam`, `newuser`, `newshort`, `craft`, `twr`
 - dungeons: `ilvl`, `mxp`, `mparty`, `lfg`, `lfgtemplate`
 - raids: `raidjoin`, `raidsetup`"""
 
@@ -90,11 +96,13 @@ general["addons"] = """The recommended addons for use in NoP are:
 
 general["website"] = """The NoP website can be found at [no-pressure.eu](https://www.no-pressure.eu)"""
 
-general["recruitmentdiscord"] = """The recruitment discord can be found [here](https://discord.gg/jx8CXHP)
+general["lfteam"] = f"""You can post personal adverts in {channel_lf_mplus} and {channel_lf_raid} (please do not post adverts for your guild here), or if you want to browse guilds we recommend the recruitment discord which can be found [here](https://discord.gg/jx8CXHP)
 
 -# Your experience on linked Discords is not managed by <No Pressure - EU>. <No Pressure - EU> will not be held liable for any interactions, positive or negative, you have on other Discord Servers. Linking to an external Discord Server does not consitute an endorsement by the <No Pressure - EU> Moderation Team for any conduct on such server. Browse at your own risk."""
 
 general["craft"] = f"""You can find crafting orders in {channel_crafting_orders}. If you are trying to find someone to do a craft for you, **please state your server** as crafts are not region-wide. You can check the pins in the channel for a profession sheet where you might be able to find a crafter for your realm."""
+
+general["wayfarers"] = """If you are playing in the North American region you can find an alternative discord at [The Wayfarer's Refuge](https://discord.gg/wayfarers)"""
 
 # ---
 dungeons = {}
@@ -123,19 +131,17 @@ dungeons["party"] = f"""- This is a learning community first and foremost, not a
   - You are asking for something that can be provided by multiple classes.
 -# You can get further information at {channel_rules_mplus}"""
 
-dungeons["lfg"] = f"""We recommend you review the {channel_dungeon_get_started} before finding dungeon groups in NoP. Dungeon Buddy instructions can be found in {channel_dungeon_buddy}."""
+dungeons["lfg"] = f"""We recommend you review {channel_dungeon_get_started} before finding dungeon groups in NoP. Dungeon Buddy instructions can be found in {channel_dungeon_buddy}."""
 
-dungeons["time"] = f"""If you aren't sure about whether to choose `Time` or `Completion` on your buddy key, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` to set your expectations!"""
+dungeons["time"] = f"""If you aren't sure about whether to choose `Time` or `Completion` on your buddy key, or what to put in the `Timing expectations` section of a template post, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` in Dungeon Buddy to set your expectations!"""
 
-dungeons["lfgtemplate"] = f"""When not using Dungeon Buddy, please try and get discord names for each player.
-```
-- Group Name:
-- Dungeon & difficulty:
-- Timing expectations:
-- Looking for:
-- Specific Requirements:
-- Password:
-```
+dungeons["lfgtemplate"] = """When not using Dungeon Buddy, please try and get discord names for each player.
+```- `Group Name:`
+- `Dungeon & difficulty:`
+- `Timing expectations:`
+- `Looking for:`
+- `Specific Requirements:`
+- `Password:` ```
 """
 
 # ---
