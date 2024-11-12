@@ -45,8 +45,6 @@ CHANNEL_WHITELIST = [
     "raid-chat",
     "raid-organisation-help",
     "boiler-mplus-chat",
-    "lfg-m11-m14",
-    "lfg-m15-and-up",
     "boiler-raid-chat",
     "nop-bot",
 ]
