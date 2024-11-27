@@ -145,6 +145,11 @@ async def craft(ctx: commands.Context):
 async def twr(ctx: commands.Context):
     await ctx.send(GENERAL["wayfarers"])
 
+@bot.command(aliases=["todayinwow"], help='Link to the WoWhead Today in WoW page')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def today(ctx: commands.Context):
+    await ctx.send(GENERAL["today"])
+
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Expected minimum ilvls for the current season')
@@ -192,6 +197,11 @@ async def time(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def lfgtemplate(ctx: commands.Context):
     await ctx.send(DUNGEONS["lfgtemplate"])
+
+@bot.command(aliases=["mythicplus"], help='Link to the mythicpl.us website')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def affix(ctx: commands.Context):
+    await ctx.send(DUNGEONS["affix"])
 
 # --- Raids
 
