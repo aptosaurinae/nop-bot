@@ -122,9 +122,10 @@ dungeons["ilvl_m0"] = f"""The expected ilevel minimum for m0 is {MPLUS_ILVLS["m0
 dungeons["ilvl_m2-m3"] = f"""The expected ilevel minimum for m2 is {MPLUS_ILVLS["m2"]}, and m3 is {MPLUS_ILVLS["m3"]}"""
 dungeons["ilvl_m4-m6"] = f"""The expected ilevel minimum for m4 is {MPLUS_ILVLS["m4"]}, m5 is {MPLUS_ILVLS["m5"]}, and m6 is {MPLUS_ILVLS["m6"]}"""
 dungeons["ilvl_m7-m9"] = f"""The expected ilevel minimum for m7 is {MPLUS_ILVLS["m7"]}, m8 is {MPLUS_ILVLS["m8"]} and m9 is {MPLUS_ILVLS["m9"]}"""
-dungeons["ilvl_m10"] = f"""The expected ilevel minimum for m10 is {MPLUS_ILVLS["m10"]}.
+dungeons["ilvl_m10"] = f"""The expected ilevel minimum for m10 and m11 is {MPLUS_ILVLS["m10"]}.
 
-This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the *minimum* we expect people to be for these dungeons. This is the same ilvl as m9 due to the loot drops being the same, but note that the 9 to 10 key jump has double-scaling due to both the normal 10% key level jump and the introduction of the missing tyrannical or fortified affix so **be prepared** for there to be a big difference in health of mobs and damage taken."""
+This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the *minimum* we expect people to be for these dungeons. This is the same ilvl as m9 due to the loot drops being the same, but note that the 9 to 10 key jump has double-scaling due to both the normal 10% key level jump and the introduction of the missing tyrannical or fortified affix so **be prepared** for there to be a big difference in health of mobs and damage taken.
+"""
 
 dungeons["ilvl_channel_addendum"] = "-# - Note that a minimum ilvl is not the only rule when forming mythic plus groups, see `!rules`, or `!mxp` / `!mparty` for details"
 

@@ -41,7 +41,7 @@ CHANNEL_WHITELIST = [
     "lfg-m2-m3",
     "lfg-m4-m6",
     "lfg-m7-m9",
-    "lfg-m10",
+    "lfg-m10-m11",
     "raid-chat",
     "raid-organisation-help",
     "boiler-mplus-chat",
@@ -164,7 +164,7 @@ async def ilvl(ctx: commands.Context):
             response = DUNGEONS["ilvl_m4-m6"]
         elif ctx.channel.name == "lfg-m7-m9":
             response = DUNGEONS["ilvl_m7-m9"]
-        elif ctx.channel.name == "lfg-m10":
+        elif ctx.channel.name == "lfg-m10-m11":
             response = DUNGEONS["ilvl_m10"]
         else:
             response = DUNGEONS["ilvl_general"]
