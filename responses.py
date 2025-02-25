@@ -4,7 +4,7 @@ try:
 except ModuleNotFoundError:
    import pip._vendor.tomli as tomllib
 
-ilvls_file = "ilvls_tww_s1.toml"
+ilvls_file = "ilvls_tww_s2.toml"
 with open(ilvls_file, "rb") as ilvls_file:
     ilvls_data = tomllib.load(ilvls_file)
 
@@ -12,28 +12,28 @@ MPLUS_ILVLS = ilvls_data["mplus"]
 RAID_ILVLS = ilvls_data["raid"]
 
 channel_channels_and_roles = "<id:customize>"
-channel_pick_your_role = "https://discord.com/channels/1055487463734386739/1063229478756696164"
-channel_contact_mods = "https://discord.com/channels/1055487463734386739/1063237446042648618"
-channel_guild = "https://discord.com/channels/1055487463734386739/1267182548702990377"
-channel_crafting_orders = "https://discord.com/channels/1055487463734386739/1065175223927853107"
+channel_pick_your_role = "[#pick-your-role](https://discord.com/channels/1055487463734386739/1063229478756696164)"
+channel_contact_mods = "[#contact-mods](https://discord.com/channels/1055487463734386739/1063237446042648618)"
+channel_guild = "[#nop-guild](https://discord.com/channels/1055487463734386739/1267182548702990377)"
+channel_crafting_orders = "[#crafting-orders](https://discord.com/channels/1055487463734386739/1065175223927853107)"
 
-channel_rules_server = "https://discord.com/channels/1055487463734386739/1180130833487626300"
-channel_rules_mplus = "https://discord.com/channels/1055487463734386739/1290734945156857938"
-channel_rules_boiler = "https://discord.com/channels/1055487463734386739/1224353705042907187"
+channel_rules_server = "[Server Rules](https://discord.com/channels/1055487463734386739/1180130833487626300)"
+channel_rules_mplus = "[get-started-dungeons -> Rules for M+ channels](https://discord.com/channels/1055487463734386739/1290734945156857938)"
+channel_rules_boiler = "[#boiler-info](https://discord.com/channels/1055487463734386739/1224353705042907187)"
 
-channel_bot_feedback = "https://discord.com/channels/1055487463734386739/1293932439382655098"
+channel_bot_feedback = "[nop-bot feedback thread](https://discord.com/channels/1055487463734386739/1293932439382655098)"
 
-channel_dungeon_get_started = "https://discord.com/channels/1055487463734386739/1225062828470173706"
-channel_dungeon_buddy = "https://discord.com/channels/1055487463734386739/1225066342106005514"
-channel_dungeon_time_complete = "https://discord.com/channels/1055487463734386739/1297972027063537705"
+channel_dungeon_get_started = "[#get-started-dungeons forum](https://discord.com/channels/1055487463734386739/1225062828470173706)"
+channel_dungeon_buddy = "[#get-started-dungeons -> Dungeon Buddy instructions](https://discord.com/channels/1055487463734386739/1225066342106005514)"
+channel_dungeon_time_complete = "[#get-started-dungeons -> Time vs Completion](https://discord.com/channels/1055487463734386739/1297972027063537705)"
 
-channel_raid_get_started = "https://discord.com/channels/1055487463734386739/1225062863073312849"
-channel_raid_organisation = "https://discord.com/channels/1055487463734386739/1065196123108679700"
-channel_raid_norm_hero = "https://discord.com/channels/1055487463734386739/1065699417342099486"
-channel_raid_mythic = "https://discord.com/channels/1055487463734386739/1224353658926272522"
+channel_raid_get_started = "[#get-started-raids forum](https://discord.com/channels/1055487463734386739/1225062863073312849)"
+channel_raid_organisation = "[#get-started-raids -> Raid Organisation](https://discord.com/channels/1055487463734386739/1065196123108679700)"
+channel_raid_norm_hero = "[#nm-hc-raids](https://discord.com/channels/1055487463734386739/1065699417342099486)"
+channel_raid_mythic = "[#mythic-raids](https://discord.com/channels/1055487463734386739/1224353658926272522)"
 
-channel_lf_mplus = "https://discord.com/channels/1055487463734386739/1225099807245467688"
-channel_lf_raid = "https://discord.com/channels/1055487463734386739/1283124807851839531"
+channel_lf_mplus = "[#lf-mplus-team](https://discord.com/channels/1055487463734386739/1225099807245467688)"
+channel_lf_raid = "[#lf-raid-team](https://discord.com/channels/1055487463734386739/1283124807851839531)"
 
 # ---
 help = {}
