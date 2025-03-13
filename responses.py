@@ -57,7 +57,7 @@ help["general"] = f"""general:
 - `today` - provides a link to the WoWhead Today in WoW page"""
 
 help["dungeons"] = """dungeons:
-- `ilvl` - the minimum ilvls allowed for each m+ difficulty (this adapts depending on which channel it's called in)
+- `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in)
 - `mxp` - a reminder of the rule about what experience is expected for keys
 - `mparty` - a reminder of the rule about who you can decline from keys
 - `lfg` - where you can find instructions on how to join dungeons and use the dungeon buddy
@@ -111,23 +111,23 @@ general["today"] = """You can find out what the current things going on in WoW a
 # ---
 dungeons = {}
 
-dungeons["ilvl_general"] = f"""The ilevel minimums this season are:
+dungeons["ilvl_general"] = f"""The ilvl guidelines this season are:
 ```- m0:   {MPLUS_ILVLS["m0"]}     - m6:   {MPLUS_ILVLS["m6"]}
 - m2:   {MPLUS_ILVLS["m2"]}     - m7:   {MPLUS_ILVLS["m7"]}
 - m3:   {MPLUS_ILVLS["m3"]}     - m8:   {MPLUS_ILVLS["m8"]}
 - m4:   {MPLUS_ILVLS["m4"]}     - m9:   {MPLUS_ILVLS["m9"]}
 - m5:   {MPLUS_ILVLS["m5"]}     - m10:  {MPLUS_ILVLS["m10"]}```"""
 
-dungeons["ilvl_m0"] = f"""The expected ilevel minimum for m0 is {MPLUS_ILVLS["m0"]}"""
-dungeons["ilvl_m2-m3"] = f"""The expected ilevel minimum for m2 is {MPLUS_ILVLS["m2"]}, and m3 is {MPLUS_ILVLS["m3"]}"""
-dungeons["ilvl_m4-m6"] = f"""The expected ilevel minimum for m4 is {MPLUS_ILVLS["m4"]}, m5 is {MPLUS_ILVLS["m5"]}, and m6 is {MPLUS_ILVLS["m6"]}"""
-dungeons["ilvl_m7-m9"] = f"""The expected ilevel minimum for m7 is {MPLUS_ILVLS["m7"]}, m8 is {MPLUS_ILVLS["m8"]} and m9 is {MPLUS_ILVLS["m9"]}"""
-dungeons["ilvl_m10"] = f"""The expected ilevel minimum for m10 and m11 is {MPLUS_ILVLS["m10"]}.
+dungeons["ilvl_m0"] = f"""The ilvl guideline for m0 is {MPLUS_ILVLS["m0"]}"""
+dungeons["ilvl_m2-m3"] = f"""The ilvl guideline for m2 is {MPLUS_ILVLS["m2"]}, and m3 is {MPLUS_ILVLS["m3"]}"""
+dungeons["ilvl_m4-m6"] = f"""The ilvl guideline for m4 is {MPLUS_ILVLS["m4"]}, m5 is {MPLUS_ILVLS["m5"]}, and m6 is {MPLUS_ILVLS["m6"]}"""
+dungeons["ilvl_m7-m9"] = f"""The ilvl guideline for m7 is {MPLUS_ILVLS["m7"]}, m8 is {MPLUS_ILVLS["m8"]} and m9 is {MPLUS_ILVLS["m9"]}"""
+dungeons["ilvl_m10"] = f"""The ilvl guideline for m10 and m11 is {MPLUS_ILVLS["m10"]}.
 
-This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the *minimum* we expect people to be for these dungeons. This is the same ilvl as m9 due to the loot drops being the same, but note that the 9 to 10 key jump has double-scaling due to both the normal 10% key level jump and the introduction of the missing tyrannical or fortified affix so **be prepared** for there to be a big difference in health of mobs and damage taken.
+This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the recommendation we expect people to be at or above for these dungeons.
 """
 
-dungeons["ilvl_channel_addendum"] = "-# - Note that a minimum ilvl is not the only rule when forming mythic plus groups, see `!rules`, or `!mxp` / `!mparty` for details"
+dungeons["ilvl_channel_addendum"] = "-# - As a group creator this is the maximum ilvl you can request; this is not the only rule for mplus groups: see `!rules`, or `!mxp` / `!mparty` for details"
 
 dungeons["xp"] = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
 
@@ -157,6 +157,8 @@ raids = {}
 raids["join"] = f"""You can find instructions on how to get started with raids in {channel_raid_get_started}, and sign up to raids in {channel_raid_norm_hero}. Mythic raids can be found in {channel_raid_mythic}"""
 
 raids["setup"] = f"""We are always looking for more raid organisers! You can find instructions on how to set up raids in {channel_raid_get_started}, or if you need more help with setting up a raid helper post then you can use {channel_raid_organisation} for discussion"""
+
+raids["ilvl"] = """Please see individual raid events for ilvl requirements. These are typically stated in the description of the event."""
 
 # ---
 

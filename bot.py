@@ -152,9 +152,10 @@ async def today(ctx: commands.Context):
 
 # --- Dungeons
 
-@bot.command(aliases=["ilevel", "itemlevel"], help='Expected minimum ilvls for the current season')
+@bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the current season')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
+    addendum = True
     if type(ctx.channel) is discord.channel.TextChannel:
         if ctx.channel.name == "lfg-m0":
             response = DUNGEONS["ilvl_m0"]
@@ -166,11 +167,15 @@ async def ilvl(ctx: commands.Context):
             response = DUNGEONS["ilvl_m7-m9"]
         elif ctx.channel.name == "lfg-m10-m11":
             response = DUNGEONS["ilvl_m10"]
+        elif ctx.channel.name in ["raid-chat", "raid-organisation-help", "boiler-raid-chat"]:
+            response = RAIDS["ilvl"]
+            addendum = False
         else:
             response = DUNGEONS["ilvl_general"]
     else:
         response = DUNGEONS["ilvl_general"]
-    response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
+    if addendum:
+        response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
     await ctx.send(response)
 
 @bot.command(help='Experience requirements for mythic plus dungeons')
