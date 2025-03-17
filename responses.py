@@ -104,7 +104,7 @@ general["lfteam"] = f"""You can post personal adverts in {channel_lf_mplus} and 
 
 general["craft"] = f"""You can find crafting orders in {channel_crafting_orders}. If you are trying to find someone to do a craft for you, **please state your server** as crafts are not region-wide. You can check the pins in the channel for a profession sheet where you might be able to find a crafter for your realm."""
 
-general["wayfarers"] = """If you are playing in the North American region you can find an alternative discord at [The Wayfarer's Refuge](https://discord.gg/wayfarers)"""
+general["wayfarers"] = """If you are playing in the North American region you can find an alternative discord at [The Wayfarer's Refuge](https://discord.gg/fRtMFktt2q)"""
 
 general["today"] = """You can find out what the current things going on in WoW are at the [WoWhead Today in WoW page](https://www.wowhead.com/today-in-wow)"""
 
