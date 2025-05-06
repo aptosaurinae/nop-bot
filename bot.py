@@ -52,6 +52,7 @@ CHANNEL_WHITELIST = [
 COOLDOWN_RATE = 1
 COOLDOWN_HELP = 5
 COOLDOWN_PER = 120
+COOLDOWN_ILVL = 300
 COOLDOWN_PER_MEME = 300
 
 bot = commands.Bot(
@@ -153,7 +154,7 @@ async def today(ctx: commands.Context):
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the current season')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_ILVL, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context):
     addendum = True
     if type(ctx.channel) is discord.channel.TextChannel:
