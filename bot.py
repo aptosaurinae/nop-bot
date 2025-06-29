@@ -151,6 +151,11 @@ async def twr(ctx: commands.Context):
 async def today(ctx: commands.Context):
     await ctx.send(GENERAL["today"])
 
+@bot.command(aliases=["classicmop", "mop"], help='Link to the "Not our Patch" discord')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def classic(ctx: commands.Context):
+    await ctx.send(GENERAL["classic"])
+
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the current season')

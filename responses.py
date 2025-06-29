@@ -40,7 +40,7 @@ help = {}
 
 help["prefix"] = "The following commands are available (prefixed by `!`):"
 
-help["suffix"] = "-# - For more information on individual commands use `helpall` for a full list in a DM"
+help["suffix"] = "-# - For more information on individual commands use `!helpall` for a full list in a DM"
 
 help["general"] = f"""general:
 - `rules` - a refresher on where you can find various rules
@@ -54,7 +54,8 @@ help["general"] = f"""general:
 - `newshort` - provides the `lfg`, and `raidjoin` commands in one
 - `craft` - provides info on placing crafting orders in NoP
 - `twr` - provides a link to The Wayfarer's Rest North American discord
-- `today` - provides a link to the WoWhead Today in WoW page"""
+- `today` - provides a link to the WoWhead Today in WoW page
+- `classic` - provides a link to the Not our Patch discord"""
 
 help["dungeons"] = """dungeons:
 - `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in)
@@ -62,14 +63,16 @@ help["dungeons"] = """dungeons:
 - `mparty` - a reminder of the rule about who you can decline from keys
 - `lfg` - where you can find instructions on how to join dungeons and use the dungeon buddy
 - `lfgtemplate` - a template for dungeon groups when not using the buddy
-- `affix` - a link to the mythicpl.us website"""
+- `affix` - a link to the mythicpl.us website
+- `time` - a link to the time vs completion topic in get-started-dungeons"""
 
 help["raids"] = """raids:
 - `raidjoin` - where to find information about joining raids
 - `raidsetup` - where to find information about setting up raids"""
 
-help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `lfteam`, `newuser`, `newshort`, `craft`, `twr`, `today`
-- dungeons: `ilvl`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`
+help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`,
+`lfteam`, `newuser`, `newshort`, `craft`, `twr`, `today`, `classic`
+- dungeons: `ilvl`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
 - raids: `raidjoin`, `raidsetup`"""
 
 # ---
@@ -107,6 +110,8 @@ general["craft"] = f"""You can find crafting orders in {channel_crafting_orders}
 general["wayfarers"] = """If you are playing in the North American region you can find an alternative discord at [The Wayfarer's Refuge](https://discord.gg/fRtMFktt2q)"""
 
 general["today"] = """You can find out what the current things going on in WoW are at the [WoWhead Today in WoW page](https://www.wowhead.com/today-in-wow)"""
+
+general["classic"] = """We are a retail focused discord. If you are playing Classic WoW, you can find a Mists of Pandaria focused discord at [Not our Patch](https://discord.gg/XRhbyeV8Zt)"""
 
 # ---
 dungeons = {}
