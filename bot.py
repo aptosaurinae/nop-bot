@@ -184,6 +184,32 @@ async def ilvl(ctx: commands.Context):
         response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
     await ctx.send(response)
 
+@bot.command(aliases=["ilevelnext", "itemlevelnext"], help='Guideline ilvls for the current season')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_ILVL, type=commands.BucketType.channel)
+async def ilvlnext(ctx: commands.Context):
+    addendum = True
+    if type(ctx.channel) is discord.channel.TextChannel:
+        if ctx.channel.name == "lfg-m0":
+            response = DUNGEONS["ilvl_m0_next"]
+        elif ctx.channel.name == "lfg-m2-m3":
+            response = DUNGEONS["ilvl_m2-m3_next"]
+        elif ctx.channel.name == "lfg-m4-m6":
+            response = DUNGEONS["ilvl_m4-m6_next"]
+        elif ctx.channel.name == "lfg-m7-m9":
+            response = DUNGEONS["ilvl_m7-m9_next"]
+        elif ctx.channel.name == "lfg-m10-m11":
+            response = DUNGEONS["ilvl_m10_next"]
+        elif ctx.channel.name in ["raid-chat", "raid-organisation-help", "boiler-raid-chat"]:
+            response = RAIDS["ilvl"]
+            addendum = False
+        else:
+            response = DUNGEONS["ilvl_general_next"]
+    else:
+        response = DUNGEONS["ilvl_general_next"]
+    if addendum:
+        response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
+    await ctx.send(response)
+
 @bot.command(help='Experience requirements for mythic plus dungeons')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def mxp(ctx: commands.Context):
@@ -254,6 +280,13 @@ async def ban(ctx: commands.Context):
     poll.add_answer(text="1 day")
     poll.add_answer(text="Forever")
     await ctx.send(response, poll=poll)
+
+@bot.command(help='Out Of Office')
+@not_dm()
+@commands.cooldown(rate=COOLDOWN_RATE, per=60, type=commands.BucketType.channel)
+async def ooo(ctx: commands.Context):
+    response = """dukes is out right now, NoP-bot will be updated on his return"""
+    await ctx.send(response)
 
 # ---
 
