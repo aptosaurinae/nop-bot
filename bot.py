@@ -49,10 +49,13 @@ CHANNEL_WHITELIST = [
     "nop-bot",
 ]
 
+CURRENT_SEASON = "s3"
+
 COOLDOWN_RATE = 1
 COOLDOWN_HELP = 5
 COOLDOWN_PER = 120
-COOLDOWN_ILVL = 300
+COOLDOWN_RATE_ILVL = 5
+COOLDOWN_PER_ILVL = 300
 COOLDOWN_PER_MEME = 300
 
 bot = commands.Bot(
@@ -158,54 +161,28 @@ async def classic(ctx: commands.Context):
 
 # --- Dungeons
 
-@bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the current season')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_ILVL, type=commands.BucketType.channel)
-async def ilvl(ctx: commands.Context):
+@bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
+@commands.cooldown(rate=COOLDOWN_RATE_ILVL, per=COOLDOWN_PER_ILVL, type=commands.BucketType.channel)
+async def ilvl(ctx: commands.Context, season: str):
     addendum = True
     if type(ctx.channel) is discord.channel.TextChannel:
         if ctx.channel.name == "lfg-m0":
-            response = DUNGEONS["ilvl_m0"]
+            response = DUNGEONS[f"ilvl_m0_{season}"]
         elif ctx.channel.name == "lfg-m2-m3":
-            response = DUNGEONS["ilvl_m2-m3"]
+            response = DUNGEONS[f"ilvl_m2-m3_{season}"]
         elif ctx.channel.name == "lfg-m4-m6":
-            response = DUNGEONS["ilvl_m4-m6"]
+            response = DUNGEONS[f"ilvl_m4-m6_{season}"]
         elif ctx.channel.name == "lfg-m7-m9":
-            response = DUNGEONS["ilvl_m7-m9"]
+            response = DUNGEONS[f"ilvl_m7-m9_{season}"]
         elif ctx.channel.name == "lfg-m10-m11":
-            response = DUNGEONS["ilvl_m10"]
+            response = DUNGEONS[f"ilvl_m10_{season}"]
         elif ctx.channel.name in ["raid-chat", "raid-organisation-help", "boiler-raid-chat"]:
             response = RAIDS["ilvl"]
             addendum = False
         else:
-            response = DUNGEONS["ilvl_general"]
+            response = DUNGEONS[f"ilvl_general_{season}"]
     else:
-        response = DUNGEONS["ilvl_general"]
-    if addendum:
-        response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
-    await ctx.send(response)
-
-@bot.command(aliases=["ilevelnext", "itemlevelnext"], help='Guideline ilvls for the current season')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_ILVL, type=commands.BucketType.channel)
-async def ilvlnext(ctx: commands.Context):
-    addendum = True
-    if type(ctx.channel) is discord.channel.TextChannel:
-        if ctx.channel.name == "lfg-m0":
-            response = DUNGEONS["ilvl_m0_next"]
-        elif ctx.channel.name == "lfg-m2-m3":
-            response = DUNGEONS["ilvl_m2-m3_next"]
-        elif ctx.channel.name == "lfg-m4-m6":
-            response = DUNGEONS["ilvl_m4-m6_next"]
-        elif ctx.channel.name == "lfg-m7-m9":
-            response = DUNGEONS["ilvl_m7-m9_next"]
-        elif ctx.channel.name == "lfg-m10-m11":
-            response = DUNGEONS["ilvl_m10_next"]
-        elif ctx.channel.name in ["raid-chat", "raid-organisation-help", "boiler-raid-chat"]:
-            response = RAIDS["ilvl"]
-            addendum = False
-        else:
-            response = DUNGEONS["ilvl_general_next"]
-    else:
-        response = DUNGEONS["ilvl_general_next"]
+        response = DUNGEONS[f"ilvl_general_{season}"]
     if addendum:
         response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
     await ctx.send(response)
@@ -286,6 +263,15 @@ async def ban(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=60, type=commands.BucketType.channel)
 async def ooo(ctx: commands.Context):
     response = """dukes is out right now, NoP-bot will be updated on his return"""
+    await ctx.send(response)
+
+@bot.command(help='test')
+@not_dm()
+@commands.cooldown(rate=COOLDOWN_RATE, per=1, type=commands.BucketType.channel)
+async def test(ctx: commands.Context, arg: str = ""):
+    response = f"""general test response. arg = {arg}"""
+    if arg == "testing123":
+        response = "testing123! successful arg."
     await ctx.send(response)
 
 # ---

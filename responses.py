@@ -4,18 +4,15 @@ try:
 except ModuleNotFoundError:
    import pip._vendor.tomli as tomllib
 
-ilvls_file = "ilvls_tww_s2.toml"
-with open(ilvls_file, "rb") as ilvls_file:
-    ilvls_data = tomllib.load(ilvls_file)
+current_expansion = "tww"
+seasons = ["s1", "s2", "s3"]
 
-ilvls_file_next = "ilvls_tww_s3.toml"
-with open(ilvls_file_next, "rb") as ilvls_file_next:
-    ilvls_data_next = tomllib.load(ilvls_file_next)
+ilvls_data = {}
+for season in seasons:
+    ilvls_file = f"ilvls_{current_expansion}_{season}.toml"
+    with open(ilvls_file, "rb") as ilvls_file:
+        ilvls_data[season] = tomllib.load(ilvls_file)
 
-MPLUS_ILVLS = ilvls_data["mplus"]
-MPLUS_ILVLS_NEXT = ilvls_data_next["mplus"]
-RAID_ILVLS = ilvls_data["raid"]
-RAID_ILVLS_NEXT = ilvls_data_next["raid"]
 
 channel_channels_and_roles = "<id:customize>"
 channel_pick_your_role = "[#pick-your-role](https://discord.com/channels/1055487463734386739/1063229478756696164)"
@@ -123,34 +120,20 @@ general["classic"] = """We are a retail focused discord. If you are playing Clas
 # ---
 dungeons = {}
 
-dungeons["ilvl_general"] = f"""The ilvl guidelines this season are:
-```- m0:   {MPLUS_ILVLS["m0"]}     - m6:   {MPLUS_ILVLS["m6"]}
-- m2:   {MPLUS_ILVLS["m2"]}     - m7:   {MPLUS_ILVLS["m7"]}
-- m3:   {MPLUS_ILVLS["m3"]}     - m8:   {MPLUS_ILVLS["m8"]}
-- m4:   {MPLUS_ILVLS["m4"]}     - m9:   {MPLUS_ILVLS["m9"]}
-- m5:   {MPLUS_ILVLS["m5"]}     - m10:  {MPLUS_ILVLS["m10"]}```"""
+for season in seasons:
+    mplus_ilvls = ilvls_data[season]["mplus"]
+    dungeons[f"ilvl_general_{season}"] = f"""The ilvl guidelines for {season} are:
+```- m0:   {mplus_ilvls["m0"]}     - m6:   {mplus_ilvls["m6"]}
+- m2:   {mplus_ilvls["m2"]}     - m7:   {mplus_ilvls["m7"]}
+- m3:   {mplus_ilvls["m3"]}     - m8:   {mplus_ilvls["m8"]}
+- m4:   {mplus_ilvls["m4"]}     - m9:   {mplus_ilvls["m9"]}
+- m5:   {mplus_ilvls["m5"]}     - m10:  {mplus_ilvls["m10"]}```"""
 
-dungeons["ilvl_general_next"] = f"""The ilvl guidelines for the next season are:
-```- m0:   {MPLUS_ILVLS_NEXT["m0"]}     - m6:   {MPLUS_ILVLS_NEXT["m6"]}
-- m2:   {MPLUS_ILVLS_NEXT["m2"]}     - m7:   {MPLUS_ILVLS_NEXT["m7"]}
-- m3:   {MPLUS_ILVLS_NEXT["m3"]}     - m8:   {MPLUS_ILVLS_NEXT["m8"]}
-- m4:   {MPLUS_ILVLS_NEXT["m4"]}     - m9:   {MPLUS_ILVLS_NEXT["m9"]}
-- m5:   {MPLUS_ILVLS_NEXT["m5"]}     - m10:  {MPLUS_ILVLS_NEXT["m10"]}```"""
-
-dungeons["ilvl_m0"] = f"""The ilvl guideline for m0 is {MPLUS_ILVLS["m0"]}"""
-dungeons["ilvl_m2-m3"] = f"""The ilvl guideline for m2 is {MPLUS_ILVLS["m2"]}, and m3 is {MPLUS_ILVLS["m3"]}"""
-dungeons["ilvl_m4-m6"] = f"""The ilvl guideline for m4 is {MPLUS_ILVLS["m4"]}, m5 is {MPLUS_ILVLS["m5"]}, and m6 is {MPLUS_ILVLS["m6"]}"""
-dungeons["ilvl_m7-m9"] = f"""The ilvl guideline for m7 is {MPLUS_ILVLS["m7"]}, m8 is {MPLUS_ILVLS["m8"]} and m9 is {MPLUS_ILVLS["m9"]}"""
-dungeons["ilvl_m10"] = f"""The ilvl guideline for m10 and m11 is {MPLUS_ILVLS["m10"]}.
-
-This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the recommendation we expect people to be at or above for these dungeons.
-"""
-
-dungeons["ilvl_m0_next"] = f"""The ilvl guideline for the next season m0 is {MPLUS_ILVLS_NEXT["m0"]}"""
-dungeons["ilvl_m2-m3_next"] = f"""The ilvl guideline for the next season m2 is {MPLUS_ILVLS_NEXT["m2"]}, and m3 is {MPLUS_ILVLS_NEXT["m3"]}"""
-dungeons["ilvl_m4-m6_next"] = f"""The ilvl guideline for the next season m4 is {MPLUS_ILVLS_NEXT["m4"]}, m5 is {MPLUS_ILVLS_NEXT["m5"]}, and m6 is {MPLUS_ILVLS_NEXT["m6"]}"""
-dungeons["ilvl_m7-m9_next"] = f"""The ilvl guideline for the next season m7 is {MPLUS_ILVLS_NEXT["m7"]}, m8 is {MPLUS_ILVLS_NEXT["m8"]} and m9 is {MPLUS_ILVLS_NEXT["m9"]}"""
-dungeons["ilvl_m10_next"] = f"""The ilvl guideline for the next season m10 and m11 is {MPLUS_ILVLS_NEXT["m10"]}.
+    dungeons[f"ilvl_m0_{season}"] = f"""The ilvl guideline for {season} for m0 is {mplus_ilvls["m0"]}"""
+    dungeons[f"ilvl_m2-m3_{season}"] = f"""The ilvl guideline for {season} for m2 is {mplus_ilvls["m2"]}, and m3 is {mplus_ilvls["m3"]}"""
+    dungeons[f"ilvl_m4-m6_{season}"] = f"""The ilvl guideline for {season} for m4 is {mplus_ilvls["m4"]}, m5 is {mplus_ilvls["m5"]}, and m6 is {mplus_ilvls["m6"]}"""
+    dungeons[f"ilvl_m7-m9_{season}"] = f"""The ilvl guideline for {season} for m7 is {mplus_ilvls["m7"]}, m8 is {mplus_ilvls["m8"]} and m9 is {mplus_ilvls["m9"]}"""
+    dungeons[f"ilvl_m10_{season}"] = f"""The ilvl guideline for {season} for m10 and m11 is {mplus_ilvls["m10"]}.
 
 This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the recommendation we expect people to be at or above for these dungeons.
 """
