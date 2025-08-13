@@ -61,8 +61,7 @@ help["general"] = f"""general:
 - `classic` - provides a link to the Not our Patch discord"""
 
 help["dungeons"] = """dungeons:
-- `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in)
-- `ilvlnext` - the guideline ilvls for m+ for the next season
+- `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in) - requires a season to be provided e.g. `!ilvl s3`
 - `mxp` - a reminder of the rule about what experience is expected for keys
 - `mparty` - a reminder of the rule about who you can decline from keys
 - `lfg` - where you can find instructions on how to join dungeons and use the dungeon buddy
@@ -76,7 +75,7 @@ help["raids"] = """raids:
 
 help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`,
 `lfteam`, `newuser`, `newshort`, `craft`, `twr`, `today`, `classic`
-- dungeons: `ilvl`, `ilvlnext`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
+- dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
 - raids: `raidjoin`, `raidsetup`"""
 
 # ---
