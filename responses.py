@@ -128,16 +128,19 @@ for season in seasons:
 - m4:   {mplus_ilvls["m4"]}     - m9:   {mplus_ilvls["m9"]}
 - m5:   {mplus_ilvls["m5"]}     - m10:  {mplus_ilvls["m10"]}```"""
 
-    dungeons[f"ilvl_m0_{season}"] = f"""The ilvl guideline for {season} for m0 is {mplus_ilvls["m0"]}"""
-    dungeons[f"ilvl_m2-m3_{season}"] = f"""The ilvl guideline for {season} for m2 is {mplus_ilvls["m2"]}, and m3 is {mplus_ilvls["m3"]}"""
-    dungeons[f"ilvl_m4-m6_{season}"] = f"""The ilvl guideline for {season} for m4 is {mplus_ilvls["m4"]}, m5 is {mplus_ilvls["m5"]}, and m6 is {mplus_ilvls["m6"]}"""
-    dungeons[f"ilvl_m7-m9_{season}"] = f"""The ilvl guideline for {season} for m7 is {mplus_ilvls["m7"]}, m8 is {mplus_ilvls["m8"]} and m9 is {mplus_ilvls["m9"]}"""
-    dungeons[f"ilvl_m10_{season}"] = f"""The ilvl guideline for {season} for m10 and m11 is {mplus_ilvls["m10"]}.
-
-This is the *maximum* ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}, but is also the recommendation we expect people to be at or above for these dungeons.
+    dungeons[f"ilvl_m0_{season}"] = f"""ilvl guideline for {season}: `m0: {mplus_ilvls["m0"]}`.
+"""
+    dungeons[f"ilvl_m2-m3_{season}"] = f"""ilvl guidelines for {season}: `m2: {mplus_ilvls["m2"]}`, and `m3: {mplus_ilvls["m3"]}`.
+"""
+    dungeons[f"ilvl_m4-m6_{season}"] = f"""ilvl guidelines for {season}: `m4: {mplus_ilvls["m4"]}`, `m5: {mplus_ilvls["m5"]}`, and `m6: {mplus_ilvls["m6"]}`.
+"""
+    dungeons[f"ilvl_m7-m9_{season}"] = f"""ilvl guidelines for {season}: `m7: {mplus_ilvls["m7"]}`, `m8: {mplus_ilvls["m8"]}` and `m9: {mplus_ilvls["m9"]}`.
+"""
+    dungeons[f"ilvl_m10_{season}"] = f"""ilvl guidelines for {season}: `m10/m11: {mplus_ilvls["m10"]}`.
 """
 
-dungeons["ilvl_channel_addendum"] = "-# - As a group creator this is the maximum ilvl you can request; this is not the only rule for mplus groups: see `!rules`, or `!mxp` / `!mparty` for details"
+dungeons["ilvl_channel_addendum"] = f"""> These are **recommendations** for players to be at or above, and this is the **maximum** ilvl we allow group creators to set based on the m+ rules in {channel_rules_mplus}.
+> This is not the only rule for mplus groups: see `!rules`, or `!mxp` / `!mparty` for details"""
 
 dungeons["xp"] = """Applications to keys where your experience in that dungeon is 2 or greater below the current key level is a perfectly valid reason for a decline and we recommend you work your way up incrementally 1 level at a time. Using dungeon score (a.k.a. raider.io / RIO score) is not a valid reason to decline an applicant, however experience in that specific dungeon is."""
 
