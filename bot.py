@@ -164,6 +164,7 @@ async def classic(ctx: commands.Context):
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
 @commands.cooldown(rate=COOLDOWN_RATE_ILVL, per=COOLDOWN_PER_ILVL, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context, season: str):
+    season = season.lower()
     addendum = True
     if type(ctx.channel) is discord.channel.TextChannel:
         if ctx.channel.name == "lfg-m0":
