@@ -28,7 +28,7 @@ channel_bot_feedback = "[nop-bot feedback thread](https://discord.com/channels/1
 
 channel_dungeon_get_started = "[#get-started-dungeons forum](https://discord.com/channels/1055487463734386739/1225062828470173706)"
 channel_dungeon_buddy = "[#get-started-dungeons -> Dungeon Buddy instructions](https://discord.com/channels/1055487463734386739/1225066342106005514)"
-channel_dungeon_time_complete = "[#get-started-dungeons -> Time vs Completion](https://discord.com/channels/1055487463734386739/1297972027063537705)"
+channel_dungeon_time_complete = "[#get-started-dungeons -> Time vs Completion](https://discord.com/channels/1055487463734386739/1385514887412977744)"
 
 channel_raid_get_started = "[#get-started-raids forum](https://discord.com/channels/1055487463734386739/1225062863073312849)"
 channel_raid_organisation = "[#get-started-raids -> Raid Organisation](https://discord.com/channels/1055487463734386739/1065196123108679700)"
@@ -151,7 +151,7 @@ dungeons["party"] = f"""- This is a learning community first and foremost, not a
 
 dungeons["lfg"] = f"""We recommend you review {channel_dungeon_get_started} before finding dungeon groups in NoP. Dungeon Buddy instructions can be found in {channel_dungeon_buddy}."""
 
-dungeons["time"] = f"""If you aren't sure about whether to choose `Time` or `Completion` on your buddy key, or what to put in the `Timing expectations` section of a template post, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` in Dungeon Buddy to set your expectations!"""
+dungeons["time"] = f"""If you aren't sure about whether to choose `Time Or Abandon`, `Time but Complete` or `Vault Completion` for your key, or what to put in the `Timing expectations` section of a template post, then see our post on the topic in {channel_dungeon_time_complete}. Please use `creator_notes` in Dungeon Buddy to set your expectations!"""
 
 dungeons["lfgtemplate"] = """When not using Dungeon Buddy, please try and get discord names for each player.
 ```- `Group Name:`
