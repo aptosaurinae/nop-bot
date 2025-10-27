@@ -38,6 +38,10 @@ channel_raid_mythic = "[#mythic-raids](https://discord.com/channels/105548746373
 channel_lf_mplus = "[#lf-mplus-team](https://discord.com/channels/1055487463734386739/1225099807245467688)"
 channel_lf_raid = "[#lf-raid-team](https://discord.com/channels/1055487463734386739/1283124807851839531)"
 
+channel_lemix_general = "[#lemix-general](https://discord.com/channels/1055487463734386739/1405239418876461168)"
+channel_lemix_mplus = "[#lemix-mythicplus](https://discord.com/channels/1055487463734386739/1425126171896582335)"
+channel_lemix_raids = "[#lemix-raids](https://discord.com/channels/1055487463734386739/1425579392511377448)"
+
 # ---
 help = {}
 
@@ -58,7 +62,8 @@ help["general"] = f"""general:
 - `craft` - provides info on placing crafting orders in NoP
 - `twr` - provides a link to The Wayfarer's Rest North American discord
 - `today` - provides a link to the WoWhead Today in WoW page
-- `classic` - provides a link to the Not our Patch discord"""
+- `classic` - provides a link to the Not our Patch discord
+- `lemix` - provides links to the legion remix channels"""
 
 help["dungeons"] = """dungeons:
 - `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in) - requires a season to be provided e.g. `!ilvl s3`
@@ -74,7 +79,7 @@ help["raids"] = """raids:
 - `raidsetup` - where to find information about setting up raids"""
 
 help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`,
-`lfteam`, `newuser`, `newshort`, `craft`, `twr`, `today`, `classic`
+`lfteam`, `newuser`, `newshort`, `craft`, `twr`, `today`, `classic`, `lemix`
 - dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
 - raids: `raidjoin`, `raidsetup`"""
 
@@ -115,6 +120,8 @@ general["wayfarers"] = """If you are playing in the North American region you ca
 general["today"] = """You can find out what the current things going on in WoW are at the [WoWhead Today in WoW page](https://www.wowhead.com/today-in-wow)"""
 
 general["classic"] = """We are a retail focused discord. If you are playing Classic WoW, you can find a Mists of Pandaria focused discord at [Not our Patch](https://discord.gg/XRhbyeV8Zt)"""
+
+general["lemix"] = f"""You can find legion remix channels in the `lemix` section, including {channel_lemix_general}, {channel_lemix_mplus}, and {channel_lemix_raids}"""
 
 # ---
 dungeons = {}

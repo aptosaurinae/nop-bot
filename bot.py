@@ -159,6 +159,11 @@ async def today(ctx: commands.Context):
 async def classic(ctx: commands.Context):
     await ctx.send(GENERAL["classic"])
 
+@bot.command(aliases=["legionremix"], help='Links to the legion remix channels')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def lemix(ctx: commands.Context):
+    await ctx.send(GENERAL["lemix"])
+
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
