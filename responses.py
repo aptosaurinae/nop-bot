@@ -93,9 +93,9 @@ general["rules"] = f"""Community wide rules can be found in {channel_rules_serve
 general["mods"] = f"""Please use {channel_contact_mods} for any non-urgent issues. If you have urgent issues that need immediate resolution then you can ping mods with the `@mods` tag."""
 
 general["guild"] = f"""The NoP guild information can be found in the {channel_guild} channel.
-You can only have one character in the guild, and you need to have been a NoP discord member for a month for an application to be accepted.
+You can only have one character in the guild, and you need to have been a NoP discord member for a week for an application to be accepted.
 
-If you have applied and are waiting for an invite, please note that we are volunteer moderators with a few checks to make for every applicant. We will get to your application but it might take a couple of days so please be patient."""
+If you have applied and are waiting for an invite, please note that we are volunteer moderators with a few checks to make for every applicant. We will get to your application but it might take a few days so please be patient."""
 
 general["addons"] = """The recommended addons for use in NoP are:
 - `Have We Met?` which will track party members for you
