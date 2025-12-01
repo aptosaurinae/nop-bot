@@ -144,10 +144,10 @@ async def newshort(ctx: commands.Context):
 async def craft(ctx: commands.Context):
     await ctx.send(GENERAL["craft"])
 
-@bot.command(aliases=["wayfarersrefuge", "nadiscord", "wayfarers"], help='Link to The Wayfarers Refuge North America discord')
+@bot.command(aliases=["twr", "wme", "wayfarersrefuge", "nadiscord", "wayfarers", "classdiscords", "classdiscord"], help='Link to the WoWhead discord servers page')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def twr(ctx: commands.Context):
-    await ctx.send(GENERAL["wayfarers"])
+async def communities(ctx: commands.Context):
+    await ctx.send(GENERAL["communities"])
 
 @bot.command(aliases=["todayinwow"], help='Link to the WoWhead Today in WoW page')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
