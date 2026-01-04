@@ -47,6 +47,7 @@ CHANNEL_WHITELIST = [
     "boiler-mplus-chat",
     "boiler-raid-chat",
     "nop-bot",
+    "bot-control",
 ]
 
 CURRENT_SEASON = "s3"
