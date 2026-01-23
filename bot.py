@@ -42,8 +42,8 @@ CHANNEL_WHITELIST = [
     "lfg-m4-m6",
     "lfg-m7-m9",
     "lfg-m10-m11",
+    "lfg-m12-m13",
     "raid-chat",
-    "raid-organisation-help",
     "boiler-mplus-chat",
     "boiler-raid-chat",
     "nop-bot",
@@ -88,7 +88,7 @@ async def helpall(ctx: commands.Context):
     response = [HELP["prefix"], HELP["general"], HELP["dungeons"], HELP["raids"]]
     response = "\n".join(response)
     await ctx.author.create_dm()
-    await ctx.author.dm_channel.send(response)
+    await ctx.author.dm_channel.send(response)  # type: ignore
     await ctx.send(f"{ctx.author.display_name} please check your DMs for a full help list")
 
 # --- General
@@ -158,11 +158,6 @@ async def today(ctx: commands.Context):
 async def classic(ctx: commands.Context):
     await ctx.send(GENERAL["classic"])
 
-@bot.command(aliases=["legionremix"], help='Links to the legion remix channels')
-@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
-async def lemix(ctx: commands.Context):
-    await ctx.send(GENERAL["lemix"])
-
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
@@ -180,8 +175,10 @@ async def ilvl(ctx: commands.Context, season: str):
         elif ctx.channel.name == "lfg-m7-m9":
             response = DUNGEONS[f"ilvl_m7-m9_{season}"]
         elif ctx.channel.name == "lfg-m10-m11":
-            response = DUNGEONS[f"ilvl_m10_{season}"]
-        elif ctx.channel.name in ["raid-chat", "raid-organisation-help", "boiler-raid-chat"]:
+            response = DUNGEONS[f"ilvl_m10-m11_{season}"]
+        elif ctx.channel.name == "lfg-m12-m13":
+            response = DUNGEONS[f"ilvl_m12-m13_{season}"]
+        elif ctx.channel.name in ["raid-chat", "boiler-raid-chat"]:
             response = RAIDS["ilvl"]
             addendum = False
         else:
@@ -268,15 +265,6 @@ async def ban(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE, per=60, type=commands.BucketType.channel)
 async def ooo(ctx: commands.Context):
     response = """dukes is out right now, NoP-bot will be updated on his return"""
-    await ctx.send(response)
-
-@bot.command(help='test')
-@not_dm()
-@commands.cooldown(rate=COOLDOWN_RATE, per=1, type=commands.BucketType.channel)
-async def test(ctx: commands.Context, arg: str = ""):
-    response = f"""general test response. arg = {arg}"""
-    if arg == "testing123":
-        response = "testing123! successful arg."
     await ctx.send(response)
 
 # ---
