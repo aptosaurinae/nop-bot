@@ -46,35 +46,36 @@ help["prefix"] = "The following commands are available (prefixed by `!`):"
 help["suffix"] = "-# - For more information on individual commands use `!helpall` for a full list in a DM"
 
 help["general"] = f"""general:
-- `rules` - a refresher on where you can find various rules
-- `roles` - pointers to where roles can be self-assigned
-- `guild` - a link to the {channel_guild} channel and some reminders of requirements to join the guild
-- `mods` - reminders on how you can contact us
-- `addons` - recommended addons for WoW
-- `website` - a link to the No Pressure website
-- `lfteam` - a link to where to find recruitment resources including the WoW recruitment EU discord
-- `newuser` - provides the `rules`, `roles`, `lfg`, and `raidjoin` commands in one
-- `newshort` - provides the `lfg`, and `raidjoin` commands in one
-- `craft` - provides info on placing crafting orders in NoP
-- `communities` - provides a link to the WoWhead discord servers page
-- `today` - provides a link to the WoWhead Today in WoW page
-- `classic` - provides a link to the Not our Patch discord"""
+- `rules`: a refresher on where you can find various rules
+- `roles`: pointers to where roles can be self-assigned
+- `guild`: a link to the {channel_guild} channel and some reminders of requirements to join the guild
+- `mods`: reminders on how you can contact us
+- `addons`: recommended addons for WoW
+- `website`: a link to the No Pressure website
+- `lfteam`: a link to where to find recruitment resources including the WoW recruitment EU discord
+- `newuser`: provides the `rules`, `roles`, `lfg`, and `raidjoin` commands in one
+- `newshort`: provides the `lfg`, and `raidjoin` commands in one
+- `craft`: provides info on placing crafting orders in NoP
+- `communities`: provides a link to the WoWhead discord servers page
+- `today`: provides a link to the WoWhead Today in WoW page
+- `classic`: provides a link to the Not our Patch discord
+- `realms`: Information about picking a realm to play on"""
 
 help["dungeons"] = """dungeons:
-- `ilvl` - the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in) - requires a season to be provided e.g. `!ilvl s3`
-- `mxp` - a reminder of the rule about what experience is expected for keys
-- `mparty` - a reminder of the rule about who you can decline from keys
-- `lfg` - where you can find instructions on how to join dungeons and use the Dungeon Buddy
-- `lfgtemplate` - a template for dungeon groups when not using the buddy
-- `affix` - a link to the mythicpl.us website
-- `time` - a link to the time / completion etiquette for mythic plus groups"""
+- `ilvl`: the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in) - requires a season to be provided e.g. `!ilvl s3`
+- `mxp`: a reminder of the rule about what experience is expected for keys
+- `mparty`: a reminder of the rule about who you can decline from keys
+- `lfg`: where you can find instructions on how to join dungeons and use the Dungeon Buddy
+- `lfgtemplate`: a template for dungeon groups when not using the buddy
+- `affix`: a link to the mythicpl.us website
+- `time`: a link to the time / completion etiquette for mythic plus groups"""
 
 help["raids"] = """raids:
-- `raidjoin` - where to find information about joining raids
-- `raidsetup` - where to find information about setting up raids"""
+- `raidjoin`: where to find information about joining raids
+- `raidsetup`: where to find information about setting up raids"""
 
 help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`,
-`lfteam`, `newuser`, `newshort`, `craft`, `communities`, `today`, `classic`
+`lfteam`, `newuser`, `newshort`, `craft`, `communities`, `today`, `classic`, `realms`
 - dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
 - raids: `raidjoin`, `raidsetup`"""
 
@@ -124,7 +125,22 @@ general["communities"] = """If you are playing in other regions or looking for o
 
 general["today"] = """You can find out what the current things going on in WoW are at the [WoWhead Today in WoW page](https://www.wowhead.com/today-in-wow)"""
 
-general["classic"] = """We are a retail focused discord. If you are playing Classic WoW, you can find a Mists of Pandaria focused discord at [Not our Patch](https://discord.gg/XRhbyeV8Zt)"""
+general["classic"] = """We are a retail focused discord, and do not currently have any plans to support any of the flavours of classic."""
+
+general["realms"] = """If you are coming from a background playing either classic WoW or many other mmos then the current state of retail might seem weird when it comes to choosing a realm. WoW retail has removed a lot of the walls between things which makes realm choice less of a problem:
+- *Faction boundaries*: you can group between horde and alliance, including instanced content; in open world you are in a weird hostile/non-hostile state but can still group together and talk using party chat.
+- *Server boundaries*: you can group with people from other servers, including instanced content, and it will "drag" you into the shard that the group lead is on.
+- *Queueable content*: you can queue for content either solo or as a group and end up in groups with players from other servers.
+- *Open world*: the open world is "sharded" such that if you are in a particularly low-pop part of the world you're likely to be on the only shard of that area so you'll see pretty much everyone else online in that area regardless of server or faction.
+- *PvP vs PvE*: there is no such thing as a PvP or PvE server any longer. Open world is "default PvE" and there's now a toggle for "war mode" you can turn on in your talents screen in major capitals that makes it so you are effectively in a PvP state in the open world, and you'll only see other people with war mode on.
+- *Gold*: You can move money between characters on different servers now using the warbank.
+
+Because of this the server populations don't matter 99% of the time. There's two elements that are still somewhat server locked:
+- *Crafting*: crafting orders can only be fulfilled by same-server characters, but even this can be got around as you can craft cross-server in a guild.
+- *Auction house*: Items that don't stack are restricted to the server, while items that do stack are region wide.
+
+You can find a list of realms with their populations / faction balance here: https://raider.io/realms/eu
+"""
 
 # ---
 dungeons = {}
@@ -146,7 +162,7 @@ for season in seasons:
     dungeons[f"ilvl_m12-m13_{season}"] = f"""We don't set specific ilvls for this level of key. Note that `m10: {mplus_ilvls["m10"]}` but often keys at this level are more dependent on you knowing the dungeon and your class than explicitly being at a high ilvl."""
 
 dungeons["ilvl_channel_addendum"] = (
-    "> These is a **recommended minimum** for character ilvls, but this is also the "
+    "> This is a **recommended minimum** for character ilvls, but this is also the "
     "**maximum** ilvl threshold we allow group creators to set for rejection.\n"
     "(that is, if your character is above this ilvl then the creator "
     "cannot reject you purely on an ilvl basis).\n"

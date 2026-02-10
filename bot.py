@@ -158,6 +158,11 @@ async def today(ctx: commands.Context):
 async def classic(ctx: commands.Context):
     await ctx.send(GENERAL["classic"])
 
+@bot.command(aliases=["realm", "populations", "population"], help='Information about picking a realm to play on')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def realms(ctx: commands.Context):
+    await ctx.send(GENERAL["realms"])
+
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
