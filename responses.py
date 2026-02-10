@@ -131,7 +131,7 @@ general["realms"] = """If you are coming from a background playing either classi
 - *Faction boundaries*: you can group between horde and alliance, including instanced content; in open world you are in a weird hostile/non-hostile state but can still group together and talk using party chat.
 - *Realm boundaries*: you can group with people from other realms, including instanced content, and it will "drag" you into the shard that the group lead is on.
 - *Queueable content*: you can queue for content either solo or as a group and end up in groups with players from other realms.
-- *Open world*: the open world is "sharded" such that if you are in a particularly low-pop part of the world you're likely to be on the only shard of that area so you'll see pretty much everyone else online in that area regardless of server or faction.
+- *Open world*: the open world is "sharded" such that if you are in a particularly low-pop part of the world you're likely to be on the only shard of that area so you'll see pretty much everyone else online in that area regardless of realm or faction.
 - *PvP vs PvE*: there is no such thing as a PvP or PvE realm any longer. Open world is "default PvE" and there's now a toggle for "war mode" you can turn on in your talents screen in major capitals that makes it so you are effectively in a PvP state in the open world, and you'll only see other people with war mode on.
 - *Gold*: You can move money between characters on different realm now using the warbank.
 
