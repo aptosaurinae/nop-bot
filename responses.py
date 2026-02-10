@@ -129,15 +129,15 @@ general["classic"] = """We are a retail focused discord, and do not currently ha
 
 general["realms"] = """If you are coming from a background playing either classic WoW or many other mmos then the current state of retail might seem weird when it comes to choosing a realm. WoW retail has removed a lot of the walls between things which makes realm choice less of a problem:
 - *Faction boundaries*: you can group between horde and alliance, including instanced content; in open world you are in a weird hostile/non-hostile state but can still group together and talk using party chat.
-- *Server boundaries*: you can group with people from other servers, including instanced content, and it will "drag" you into the shard that the group lead is on.
-- *Queueable content*: you can queue for content either solo or as a group and end up in groups with players from other servers.
+- *Realm boundaries*: you can group with people from other realms, including instanced content, and it will "drag" you into the shard that the group lead is on.
+- *Queueable content*: you can queue for content either solo or as a group and end up in groups with players from other realms.
 - *Open world*: the open world is "sharded" such that if you are in a particularly low-pop part of the world you're likely to be on the only shard of that area so you'll see pretty much everyone else online in that area regardless of server or faction.
-- *PvP vs PvE*: there is no such thing as a PvP or PvE server any longer. Open world is "default PvE" and there's now a toggle for "war mode" you can turn on in your talents screen in major capitals that makes it so you are effectively in a PvP state in the open world, and you'll only see other people with war mode on.
-- *Gold*: You can move money between characters on different servers now using the warbank.
+- *PvP vs PvE*: there is no such thing as a PvP or PvE realm any longer. Open world is "default PvE" and there's now a toggle for "war mode" you can turn on in your talents screen in major capitals that makes it so you are effectively in a PvP state in the open world, and you'll only see other people with war mode on.
+- *Gold*: You can move money between characters on different realm now using the warbank.
 
-Because of this the server populations don't matter 99% of the time. There's two elements that are still somewhat server locked:
-- *Crafting*: crafting orders can only be fulfilled by same-server characters, but even this can be got around as you can craft cross-server in a guild.
-- *Auction house*: Items that don't stack are restricted to the server, while items that do stack are region wide.
+Because of this the realm populations don't matter 99% of the time. There's two elements that are still somewhat realm locked:
+- *Crafting*: crafting orders can only be fulfilled by same-realm characters, but even this can be got around as you can craft cross-realm in a guild.
+- *Auction house*: Items that don't stack are restricted to the realm, while items that do stack are region wide.
 
 You can find a list of realms with their populations / faction balance here: https://raider.io/realms/eu
 """
