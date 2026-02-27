@@ -4,8 +4,8 @@ try:
 except ModuleNotFoundError:
    import pip._vendor.tomli as tomllib
 
-current_expansion = "tww"
-seasons = ["s1", "s2", "s3", "s4"]
+current_expansion = "midnight"
+seasons = ["s0", "s1", "s4"]
 
 ilvls_data = {}
 for season in seasons:
