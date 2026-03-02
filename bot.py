@@ -4,9 +4,13 @@ try:
 except ModuleNotFoundError:
     import pip._vendor.tomli as tomllib
 import argparse
-from datetime import timedelta
+import logging
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
 import discord
 from discord.ext import commands
+
 from responses import (
     help as HELP,
     general as GENERAL,
@@ -16,6 +20,7 @@ from responses import (
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 parser = argparse.ArgumentParser(description="Configuration for discord bot")
 parser.add_argument("token_file", type=str, help="Discord Token")
@@ -57,6 +62,32 @@ COOLDOWN_RATE_ILVL = 5
 COOLDOWN_PER_ILVL = 300
 COOLDOWN_PER_MEME = 300
 
+BAN_ME_ROLE = 1476588775105757254
+BAN_ME_TEST_ROLE = 1477989468525953086
+FORBIDDEN_ROLE_IDS = {BAN_ME_ROLE, BAN_ME_TEST_ROLE}
+
+LOG_CHANNELS = {
+    "No Pressure - EU": 1477048139398647909,
+    "dukes-bot-testing": 1457285641976152085,
+}
+
+def setup_logging():
+    """Setup logger."""
+    log_folder = Path(__file__).parent
+    dt_now = datetime.now(timezone.utc)
+    datetime_str = (
+        f"{dt_now.year}-{dt_now.month}-{dt_now.day}_{dt_now.hour}-{dt_now.minute}-{dt_now.second}"
+    )
+    if log_folder is not None and log_folder.exists():
+        log_file_path = log_folder / f"{datetime_str}_nop_bot.log"
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+            handlers=[logging.FileHandler(log_file_path, encoding="utf-8")],
+        )
+
+setup_logging()
+
 bot = commands.Bot(
     command_prefix='!',
     intents=intents,
@@ -71,6 +102,33 @@ def not_dm():
     def predicate(ctx):
         return type(ctx.channel) is not discord.channel.DMChannel
     return commands.check(predicate)
+
+# --- Ban functionality
+@bot.event
+async def on_member_update(before: discord.Member, after: discord.Member):
+    before_roles = {r.id for r in before.roles}
+    after_roles = {r.id for r in after.roles}
+
+    added_roles = after_roles - before_roles
+    forbidden_added = added_roles & FORBIDDEN_ROLE_IDS
+
+    log_channel = LOG_CHANNELS.get(after.guild.name)
+    if forbidden_added and log_channel is not None:
+        roles_to_remove = [after.guild.get_role(rid) for rid in forbidden_added]
+
+        try:
+            await after.remove_roles(*roles_to_remove, reason="Forbidden role removed before auto-ban")
+        except Exception as e:
+            logging.info(f"Failed to remove roles from {after}: {e}")
+
+        log_channel = after.guild.get_channel(log_channel)
+        logging.info(log_channel)
+        if log_channel:
+            await log_channel.send(f"{after.mention} gained a forbidden role and was banned.")  # type: ignore
+
+        await after.ban(reason="Auto-ban: forbidden role added")
+        logging.info(f"Banned user {after.display_name} {after.id}")
+
 
 # --- Help
 
