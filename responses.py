@@ -144,29 +144,44 @@ You can find a list of realms with their populations / faction balance here: htt
 
 # ---
 dungeons = {}
+ilvl_text_1 = (
+    "### :loudspeaker: As a community ***we do not enforce a minimum item level***, "
+    "it is up to the discretion of the group lead. __When in doubt, ask__. :loudspeaker:\n"
+    "Group leads **cannot** require an item level above the following (based on item drop level):"
+)
+ilvl_text_last = (
+    "If you are looking for a recommendation for what key levels you can do at an overall ilvl then you can use these as guidelines or ask.\n"
+    "-# This is not the only rule for mplus groups: see `!rules`, or `!mxp` / `!mparty` for details"
+)
+ilvl_emoji = ":white_small_square:"
 
 for season in seasons:
     mplus_ilvls = ilvls_data[season]["mplus"]
-    dungeons[f"ilvl_general_{season}"] = f"""The ilvl guidelines for {season} are:
-```- m0:   {mplus_ilvls["m0"]}     - m6:   {mplus_ilvls["m6"]}
-- m2:   {mplus_ilvls["m2"]}     - m7:   {mplus_ilvls["m7"]}
-- m3:   {mplus_ilvls["m3"]}     - m8:   {mplus_ilvls["m8"]}
-- m4:   {mplus_ilvls["m4"]}     - m9:   {mplus_ilvls["m9"]}
-- m5:   {mplus_ilvls["m5"]}     - m10:  {mplus_ilvls["m10"]}```"""
+    dungeons[f"ilvl_general_{season}"] = (
+        f"{ilvl_text_1}\n"
+        f"{ilvl_emoji} `m0: {mplus_ilvls["m0"]}` {ilvl_emoji} `m2: {mplus_ilvls["m2"]}` {ilvl_emoji} `m3: {mplus_ilvls["m3"]}`\n"
+        f"{ilvl_emoji} `m4: {mplus_ilvls["m4"]}` {ilvl_emoji} `m5: {mplus_ilvls["m5"]}` {ilvl_emoji} `m6: {mplus_ilvls["m6"]}`\n"
+        f"{ilvl_emoji} `m7: {mplus_ilvls["m7"]}` {ilvl_emoji} `m8: {mplus_ilvls["m8"]}` {ilvl_emoji} `m9: {mplus_ilvls["m9"]}`\n"
+        f"{ilvl_emoji} `m10+: {mplus_ilvls["m10"]}`\n\n"
+        f"{ilvl_text_last}"
+    )
 
-    dungeons[f"ilvl_m0_{season}"] = f"""ilvl guideline for {season}: `m0: {mplus_ilvls["m0"]}`."""
-    dungeons[f"ilvl_m2-m3_{season}"] = f"""ilvl guidelines for {season}: `m2: {mplus_ilvls["m2"]}`, and `m3: {mplus_ilvls["m3"]}`."""
-    dungeons[f"ilvl_m4-m6_{season}"] = f"""ilvl guidelines for {season}: `m4: {mplus_ilvls["m4"]}`, `m5: {mplus_ilvls["m5"]}`, and `m6: {mplus_ilvls["m6"]}`."""
-    dungeons[f"ilvl_m7-m9_{season}"] = f"""ilvl guidelines for {season}: `m7: {mplus_ilvls["m7"]}`, `m8: {mplus_ilvls["m8"]}` and `m9: {mplus_ilvls["m9"]}`."""
-    dungeons[f"ilvl_m10-m11_{season}"] = f"""ilvl guidelines for {season}: `m10: {mplus_ilvls["m10"]}`."""
-    dungeons[f"ilvl_m12-m13_{season}"] = f"""We don't set specific ilvls for this level of key. Note that `m10: {mplus_ilvls["m10"]}` but often keys at this level are more dependent on you knowing the dungeon and your class than explicitly being at a high ilvl."""
+    dungeons[f"ilvl_m0_{season}"] = f"{ilvl_emoji} `m0: {mplus_ilvls["m0"]}`."
+    dungeons[f"ilvl_m2-m3_{season}"] = f"{ilvl_emoji} `m2: {mplus_ilvls["m2"]}` {ilvl_emoji} `m3: {mplus_ilvls["m3"]}`"
+    dungeons[f"ilvl_m4-m6_{season}"] = f"{ilvl_emoji} `m4: {mplus_ilvls["m4"]}` {ilvl_emoji} `m5: {mplus_ilvls["m5"]}` {ilvl_emoji} `m6: {mplus_ilvls["m6"]}`"
+    dungeons[f"ilvl_m7-m9_{season}"] = f"{ilvl_emoji} `m7: {mplus_ilvls["m7"]}` {ilvl_emoji} `m8: {mplus_ilvls["m8"]}` {ilvl_emoji} `m9: {mplus_ilvls["m9"]}`"
+    dungeons[f"ilvl_m10-m11_{season}"] = f"{ilvl_emoji} `m10: {mplus_ilvls["m10"]}`"
+    dungeons[f"ilvl_m12-m13_{season}"] = (
+        f"We don't set specific ilvls for this level of key. Note that `m10: {mplus_ilvls["m10"]}` "
+        f"but often keys at this level are more dependent on you knowing the dungeon "
+        f"and your class than explicitly being at a high ilvl."
+    )
 
-dungeons["ilvl_channel_addendum"] = (
-    "> This is a **recommended minimum** for character ilvls, but this is also the "
-    "**maximum** ilvl threshold we allow group creators to set for rejection.\n"
-    "(that is, if your character is above this ilvl then the creator "
-    "cannot reject you purely on an ilvl basis).\n"
-    "> This is not the only rule for mplus groups: see `!rules`, or `!mxp` / `!mparty` for details"
+dungeons["ilvl_channel_addendum_1"] = (
+    f"{ilvl_text_1}"
+)
+dungeons["ilvl_channel_addendum_2"] = (
+    f"{ilvl_text_last}"
 )
 
 dungeons["xp"] = (

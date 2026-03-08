@@ -53,6 +53,7 @@ CHANNEL_WHITELIST = [
     "boiler-raid-chat",
     "nop-bot",
     "bot-control",
+    "helper-chat",
 ]
 
 COOLDOWN_RATE = 1
@@ -117,7 +118,7 @@ async def on_member_update(before: discord.Member, after: discord.Member):
         roles_to_remove = [after.guild.get_role(rid) for rid in forbidden_added]
 
         try:
-            await after.remove_roles(*roles_to_remove, reason="Forbidden role removed before auto-ban")
+            await after.remove_roles(*roles_to_remove, reason="Forbidden role removed before auto-ban")  # type: ignore
         except Exception as e:
             logging.info(f"Failed to remove roles from {after}: {e}")
 
@@ -227,6 +228,10 @@ async def realms(ctx: commands.Context):
 @commands.cooldown(rate=COOLDOWN_RATE_ILVL, per=COOLDOWN_PER_ILVL, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context, season: str):
     season = season.lower()
+    if season == "jen":
+        response = "You do you hun, live your best life"
+        await ctx.send(response)
+        return None
     addendum = True
     if type(ctx.channel) is discord.channel.TextChannel:
         if ctx.channel.name == "lfg-m0":
@@ -241,15 +246,17 @@ async def ilvl(ctx: commands.Context, season: str):
             response = DUNGEONS[f"ilvl_m10-m11_{season}"]
         elif ctx.channel.name == "lfg-m12-m13":
             response = DUNGEONS[f"ilvl_m12-m13_{season}"]
+            addendum = False
         elif ctx.channel.name in ["raid-chat", "boiler-raid-chat"]:
             response = RAIDS["ilvl"]
             addendum = False
         else:
             response = DUNGEONS[f"ilvl_general_{season}"]
+            addendum = False
     else:
         response = DUNGEONS[f"ilvl_general_{season}"]
     if addendum:
-        response = f'{response}\n{DUNGEONS["ilvl_channel_addendum"]}'
+        response = f'{DUNGEONS["ilvl_channel_addendum_1"]}\n{response}\n{DUNGEONS["ilvl_channel_addendum_2"]}'
     await ctx.send(response)
 
 @bot.command(help='Experience requirements for mythic plus dungeons')
