@@ -159,20 +159,20 @@ for season in seasons:
     mplus_ilvls = ilvls_data[season]["mplus"]
     dungeons[f"ilvl_general_{season}"] = (
         f"{ilvl_text_1}\n"
-        f"{ilvl_emoji} `m0: {mplus_ilvls["m0"]}` {ilvl_emoji} `m2: {mplus_ilvls["m2"]}` {ilvl_emoji} `m3: {mplus_ilvls["m3"]}`\n"
-        f"{ilvl_emoji} `m4: {mplus_ilvls["m4"]}` {ilvl_emoji} `m5: {mplus_ilvls["m5"]}` {ilvl_emoji} `m6: {mplus_ilvls["m6"]}`\n"
-        f"{ilvl_emoji} `m7: {mplus_ilvls["m7"]}` {ilvl_emoji} `m8: {mplus_ilvls["m8"]}` {ilvl_emoji} `m9: {mplus_ilvls["m9"]}`\n"
-        f"{ilvl_emoji} `m10+: {mplus_ilvls["m10"]}`\n\n"
+        f"{ilvl_emoji} `m0: {mplus_ilvls['m0']}` {ilvl_emoji} `m2: {mplus_ilvls['m2']}` {ilvl_emoji} `m3: {mplus_ilvls['m3']}`\n"
+        f"{ilvl_emoji} `m4: {mplus_ilvls['m4']}` {ilvl_emoji} `m5: {mplus_ilvls['m5']}` {ilvl_emoji} `m6: {mplus_ilvls['m6']}`\n"
+        f"{ilvl_emoji} `m7: {mplus_ilvls['m7']}` {ilvl_emoji} `m8: {mplus_ilvls['m8']}` {ilvl_emoji} `m9: {mplus_ilvls['m9']}`\n"
+        f"{ilvl_emoji} `m10+: {mplus_ilvls['m10']}`\n\n"
         f"{ilvl_text_last}"
     )
 
-    dungeons[f"ilvl_m0_{season}"] = f"{ilvl_emoji} `m0: {mplus_ilvls["m0"]}`."
-    dungeons[f"ilvl_m2-m3_{season}"] = f"{ilvl_emoji} `m2: {mplus_ilvls["m2"]}` {ilvl_emoji} `m3: {mplus_ilvls["m3"]}`"
-    dungeons[f"ilvl_m4-m6_{season}"] = f"{ilvl_emoji} `m4: {mplus_ilvls["m4"]}` {ilvl_emoji} `m5: {mplus_ilvls["m5"]}` {ilvl_emoji} `m6: {mplus_ilvls["m6"]}`"
-    dungeons[f"ilvl_m7-m9_{season}"] = f"{ilvl_emoji} `m7: {mplus_ilvls["m7"]}` {ilvl_emoji} `m8: {mplus_ilvls["m8"]}` {ilvl_emoji} `m9: {mplus_ilvls["m9"]}`"
-    dungeons[f"ilvl_m10-m11_{season}"] = f"{ilvl_emoji} `m10: {mplus_ilvls["m10"]}`"
+    dungeons[f"ilvl_m0_{season}"] = f"{ilvl_emoji} `m0: {mplus_ilvls['m0']}`."
+    dungeons[f"ilvl_m2-m3_{season}"] = f"{ilvl_emoji} `m2: {mplus_ilvls['m2']}` {ilvl_emoji} `m3: {mplus_ilvls['m3']}`"
+    dungeons[f"ilvl_m4-m6_{season}"] = f"{ilvl_emoji} `m4: {mplus_ilvls['m4']}` {ilvl_emoji} `m5: {mplus_ilvls['m5']}` {ilvl_emoji} `m6: {mplus_ilvls['m6']}`"
+    dungeons[f"ilvl_m7-m9_{season}"] = f"{ilvl_emoji} `m7: {mplus_ilvls['m7']}` {ilvl_emoji} `m8: {mplus_ilvls['m8']}` {ilvl_emoji} `m9: {mplus_ilvls['m9']}`"
+    dungeons[f"ilvl_m10-m11_{season}"] = f"{ilvl_emoji} `m10: {mplus_ilvls['m10']}`"
     dungeons[f"ilvl_m12-m13_{season}"] = (
-        f"We don't set specific ilvls for this level of key. Note that `m10: {mplus_ilvls["m10"]}` "
+        f"We don't set specific ilvls for this level of key. Note that `m10: {mplus_ilvls['m10']}` "
         f"but often keys at this level are more dependent on you knowing the dungeon "
         f"and your class than explicitly being at a high ilvl."
     )
