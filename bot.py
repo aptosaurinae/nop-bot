@@ -222,7 +222,7 @@ async def classic(ctx: commands.Context):
 async def realms(ctx: commands.Context):
     await ctx.send(GENERAL["realms"])
 
-@bot.command(aliases=["timestamp", "time", "timezone"], help='Information about timestamps')
+@bot.command(aliases=["timestamp", "timezone"], help='Information about timestamps')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def timestamps(ctx: commands.Context):
     await ctx.send(GENERAL["timestamp"])
