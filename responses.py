@@ -59,7 +59,8 @@ help["general"] = f"""general:
 - `communities`: provides a link to the WoWhead discord servers page
 - `today`: provides a link to the WoWhead Today in WoW page
 - `classic`: provides a link to the Not our Patch discord
-- `realms`: Information about picking a realm to play on"""
+- `realms`: Information about picking a realm to play on
+- `timestamp`: Information on Discord timestamps"""
 
 help["dungeons"] = """dungeons:
 - `ilvl`: the guideline ilvls for each m+ difficulty (this adapts depending on which channel it's called in) - requires a season to be provided e.g. `!ilvl s3`
@@ -74,8 +75,8 @@ help["raids"] = """raids:
 - `raidjoin`: where to find information about joining raids
 - `raidsetup`: where to find information about setting up raids"""
 
-help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`,
-`lfteam`, `newuser`, `newshort`, `craft`, `communities`, `today`, `classic`, `realms`
+help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `lfteam`,
+`newuser`, `newshort`, `craft`, `communities`, `today`, `classic`, `realms`, `timestamp`
 - dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
 - raids: `raidjoin`, `raidsetup`"""
 
