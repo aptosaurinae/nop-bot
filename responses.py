@@ -142,6 +142,8 @@ Because of this the realm populations don't matter 99% of the time. There's two 
 You can find a list of realms with their populations / faction balance here: https://raider.io/realms/eu
 """
 
+general["timestamp"] = """Timestamps in Discord look like these: <t:1773762480:t> or <t:1773762480:D>. Any time or date which looks like these (and that you can hover over to get a tooltip) is in **your** timezone."""
+
 # ---
 dungeons = {}
 ilvl_text_1 = (

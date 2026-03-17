@@ -97,7 +97,7 @@ bot = commands.Bot(
 
 @bot.check
 def check_commands(ctx: commands.Context):
-    return type(ctx.channel) is discord.channel.DMChannel or (type(ctx.channel) is discord.channel.TextChannel and ctx.channel.name in CHANNEL_WHITELIST)
+    return type(ctx.channel) is discord.channel.DMChannel or (type(ctx.channel) is discord.channel.TextChannel and ctx.channel.name in CHANNEL_WHITELIST) or type(ctx.channel is discord.channel.ForumChannel)
 
 def not_dm():
     def predicate(ctx):
@@ -222,6 +222,11 @@ async def classic(ctx: commands.Context):
 async def realms(ctx: commands.Context):
     await ctx.send(GENERAL["realms"])
 
+@bot.command(aliases=["timestamp", "time", "timezone"], help='Information about timestamps')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def timestamps(ctx: commands.Context):
+    await ctx.send(GENERAL["timestamp"])
+
 # --- Dungeons
 
 @bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
@@ -232,8 +237,9 @@ async def ilvl(ctx: commands.Context, season: str):
         response = "You do you hun, live your best life"
         await ctx.send(response)
         return None
-    addendum = True
-    if type(ctx.channel) is discord.channel.TextChannel:
+    addendum = False
+    if isinstance(ctx.channel, discord.channel.TextChannel):
+        addendum = True
         if ctx.channel.name == "lfg-m0":
             response = DUNGEONS[f"ilvl_m0_{season}"]
         elif ctx.channel.name == "lfg-m2-m3":
@@ -246,15 +252,16 @@ async def ilvl(ctx: commands.Context, season: str):
             response = DUNGEONS[f"ilvl_m10-m11_{season}"]
         elif ctx.channel.name == "lfg-m12-m13":
             response = DUNGEONS[f"ilvl_m12-m13_{season}"]
-            addendum = False
         elif ctx.channel.name in ["raid-chat", "boiler-raid-chat"]:
             response = RAIDS["ilvl"]
             addendum = False
         else:
             response = DUNGEONS[f"ilvl_general_{season}"]
             addendum = False
+    elif isinstance(ctx.channel, discord.Thread) and "raids" in ctx.channel.category.name.lower():  # type: ignore
+        response = RAIDS["ilvl"]
     else:
-        response = DUNGEONS[f"ilvl_general_{season}"]
+        response = f"{DUNGEONS[f'ilvl_general_{season}']}\n\n{RAIDS['ilvl']}"
     if addendum:
         response = f'{DUNGEONS["ilvl_channel_addendum_1"]}\n{response}\n{DUNGEONS["ilvl_channel_addendum_2"]}'
     await ctx.send(response)
