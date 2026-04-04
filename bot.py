@@ -125,8 +125,12 @@ async def on_member_update(before: discord.Member, after: discord.Member):
         log_channel = after.guild.get_channel(log_channel)
         logging.info(log_channel)
         if log_channel:
-            await log_channel.send(f"{after.mention} gained a forbidden role and was banned.")  # type: ignore
-
+            await log_channel.send(  # type: ignore
+                f"{after.mention} gained a forbidden role and was banned.\n"
+                f"- Created: {after.created_at.isoformat()}\n"
+                f"- Joined: {after.joined_at.isoformat() if isinstance(after.joined_at, datetime) else 'null'}\n"
+                f"- Roles: `{str([role.name for role in after.roles])[1:-1]}`"
+            )
         await after.ban(reason="Auto-ban: forbidden role added")
         logging.info(f"Banned user {after.display_name} {after.id}")
 
@@ -229,10 +233,14 @@ async def timestamps(ctx: commands.Context):
 
 # --- Dungeons
 
-@bot.command(aliases=["ilevel", "itemlevel"], help='Guideline ilvls for the requested season')
+@bot.command(aliases=["ilevel", "itemlevel", "ILVL", "Ilvl"], help='Guideline ilvls for the requested season')
 @commands.cooldown(rate=COOLDOWN_RATE_ILVL, per=COOLDOWN_PER_ILVL, type=commands.BucketType.channel)
-async def ilvl(ctx: commands.Context, season: str):
+async def ilvl(ctx: commands.Context, season: str = ""):
     season = season.lower()
+    if season == "":
+        response = "Please state a season to get a response for that season e.g. `!ilvl s1`"
+        await ctx.send(response)
+        return None
     if season == "jen":
         response = "You do you hun, live your best life"
         await ctx.send(response)
