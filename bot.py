@@ -304,6 +304,11 @@ async def lfgtemplate(ctx: commands.Context):
 async def affix(ctx: commands.Context):
     await ctx.send(DUNGEONS["affix"])
 
+@bot.command(aliases=["lfgfilter", "filters"], help='Help on removing filters for LFG')
+@commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
+async def filter(ctx: commands.Context):
+    await ctx.send(DUNGEONS["filter"])
+
 # --- Raids
 
 @bot.command(aliases=["raid"], help='How to join raids')

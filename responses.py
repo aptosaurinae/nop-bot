@@ -69,7 +69,8 @@ help["dungeons"] = """dungeons:
 - `lfg`: where you can find instructions on how to join dungeons and use the Dungeon Buddy
 - `lfgtemplate`: a template for dungeon groups when not using the buddy
 - `affix`: a link to the mythicpl.us website
-- `time`: a link to the time / completion etiquette for mythic plus groups"""
+- `time`: a link to the time / completion etiquette for mythic plus groups
+- `filter`: help on removing filters to find LFG groups"""
 
 help["raids"] = """raids:
 - `raidjoin`: where to find information about joining raids
@@ -77,7 +78,7 @@ help["raids"] = """raids:
 
 help["short"] = """- general: `rules`, `roles`, `guild`, `mods`, `addons`, `website`, `lfteam`,
 `newuser`, `newshort`, `craft`, `communities`, `today`, `classic`, `realms`, `timestamp`
-- dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`
+- dungeons: `ilvl <s#>`, `mxp`, `mparty`, `lfg`, `lfgtemplate`, `affix`, `time`, `filter`
 - raids: `raidjoin`, `raidsetup`"""
 
 # ---
@@ -227,6 +228,12 @@ dungeons["lfgtemplate"] = """When not using Dungeon Buddy, please try and get di
 """
 
 dungeons["affix"] = """You can find the current affix along with lots of other m+ info at the [mythicpl.us website](https://mythicpl.us)"""
+
+dungeons["filter"] = (
+    "If you are having trouble finding groups in game, make sure you have both cleared any "
+    "active filters AND make sure you are enabling all languages at the bottom of the filters pane. "
+    "Filters can be found in the top right of the in-game LFG pane under the 'Refresh' button."
+)
 
 # ---
 raids = {}
