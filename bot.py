@@ -19,7 +19,6 @@ from responses import (
 )
 
 intents = discord.Intents.default()
-intents.message_content = True
 intents.members = True
 
 parser = argparse.ArgumentParser(description="Configuration for discord bot")
@@ -30,6 +29,7 @@ with open(args["token_file"], "rb") as token_file:
     token_data = tomllib.load(token_file)
 
 TOKEN = token_data["discord"]["token"]
+BOT_ID = token_data["discord"]["bot_id"]
 
 CHANNEL_WHITELIST = [
     "general-chat",
@@ -90,7 +90,7 @@ def setup_logging():
 setup_logging()
 
 bot = commands.Bot(
-    command_prefix='!',
+    command_prefix=f'<@{BOT_ID}> !',
     intents=intents,
     help_command=None
 )
