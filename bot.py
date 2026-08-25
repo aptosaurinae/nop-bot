@@ -5,18 +5,17 @@ except ModuleNotFoundError:
     import pip._vendor.tomli as tomllib
 import argparse
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import discord
 from discord.ext import commands
 
-from responses import (
-    help as HELP,
-    general as GENERAL,
-    dungeons as DUNGEONS,
-    raids as RAIDS
-)
+from responses import dungeons as DUNGEONS
+from responses import general as GENERAL
+from responses import help as HELP
+from responses import raids as RAIDS
 
 intents = discord.Intents.default()
 intents.members = True
@@ -89,8 +88,16 @@ def setup_logging():
 
 setup_logging()
 
+def flexible_prefix(bot, message):
+    pattern = rf"^<@{BOT_ID}>([ !]*)"
+    match = re.match(pattern, message.content)
+    if match:
+        # Return exactly what the user typed as the prefix
+        return match.group(0)
+    return commands.when_mentioned(bot, message)
+
 bot = commands.Bot(
-    command_prefix=f'<@{BOT_ID}> !',
+    command_prefix=flexible_prefix,
     intents=intents,
     help_command=None
 )
@@ -186,7 +193,7 @@ async def addons(ctx: commands.Context):
 async def website(ctx: commands.Context):
     await ctx.send(GENERAL["website"])
 
-@bot.command(aliases=['recruitment','recruitmentdiscord'],help='Links to recruitment areas')
+@bot.command(aliases=["recruitment","recruitmentdiscord"],help='Links to recruitment areas')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def lfteam(ctx: commands.Context):
     await ctx.send(GENERAL["lfteam"])
@@ -196,7 +203,7 @@ async def lfteam(ctx: commands.Context):
 async def newuser(ctx: commands.Context):
     await ctx.send(GENERAL["newuser"])
 
-@bot.command(aliases=["new"], help='Provides the `lfg` and `raidjoin` commands in one response')
+@bot.command(help='Provides the `lfg` and `raidjoin` commands in one response')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def newshort(ctx: commands.Context):
     await ctx.send(GENERAL["newuser_short"])
@@ -216,7 +223,7 @@ async def communities(ctx: commands.Context):
 async def today(ctx: commands.Context):
     await ctx.send(GENERAL["today"])
 
-@bot.command(aliases=["classicmop", "mop"], help='Link to the "Not our Patch" discord')
+@bot.command(aliases=["classicmop", "mop"], help='Response for whether we support Classic WoW or not')
 @commands.cooldown(rate=COOLDOWN_RATE, per=COOLDOWN_PER, type=commands.BucketType.channel)
 async def classic(ctx: commands.Context):
     await ctx.send(GENERAL["classic"])
@@ -233,18 +240,18 @@ async def timestamps(ctx: commands.Context):
 
 # --- Dungeons
 
-@bot.command(aliases=["ilevel", "itemlevel", "ILVL", "Ilvl"], help='Guideline ilvls for the requested season')
+@bot.command(aliases=["ilevel", "itemlevel", "ILVL", "Ilvl",], help='Guideline ilvls for the requested season')
 @commands.cooldown(rate=COOLDOWN_RATE_ILVL, per=COOLDOWN_PER_ILVL, type=commands.BucketType.channel)
 async def ilvl(ctx: commands.Context, season: str = ""):
     season = season.lower()
     if season == "":
         response = "Please state a season to get a response for that season e.g. `!ilvl s1`"
         await ctx.send(response)
-        return None
+        return
     if season == "jen":
         response = "You do you hun, live your best life"
         await ctx.send(response)
-        return None
+        return
     addendum = False
     if isinstance(ctx.channel, discord.channel.TextChannel):
         addendum = True
