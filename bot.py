@@ -4,31 +4,40 @@ try:
 except ModuleNotFoundError:
     import pip._vendor.tomli as tomllib
 import argparse
+import json
 import logging
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from responses import dungeons as DUNGEONS
 from responses import general as GENERAL
 from responses import help as HELP
 from responses import raids as RAIDS
 
+logger = logging.getLogger(__name__)
+
 intents = discord.Intents.default()
 intents.members = True
 
 parser = argparse.ArgumentParser(description="Configuration for discord bot")
-parser.add_argument("token_file", type=str, help="Discord Token")
+parser.add_argument("guild_file", type=str, help="toml containing guild config")
 
 args = vars(parser.parse_args())
-with open(args["token_file"], "rb") as token_file:
-    token_data = tomllib.load(token_file)
+with open(args["guild_file"], "rb") as guild_file:
+    guild_data = tomllib.load(guild_file)
 
-TOKEN = token_data["discord"]["token"]
-BOT_ID = token_data["discord"]["bot_id"]
+TOKEN = guild_data["token"]
+BOT_ID = guild_data["bot_id"]
+GUILD_ID = guild_data["server_id"]
+FORBIDDEN_ROLE = {guild_data["forbidden_role_id"]}
+NEW_USER_ROLE = guild_data["new_user"]["role_id"]
+NEW_USER_FREQUENCY = guild_data["new_user"]["frequency"]
+NEW_USER_FILE = Path(__file__).parent / guild_data["new_user"]["file_name"]
+NEW_USER_DURATION = guild_data["new_user"]["duration"]
 
 CHANNEL_WHITELIST = [
     "general-chat",
@@ -62,22 +71,22 @@ COOLDOWN_RATE_ILVL = 5
 COOLDOWN_PER_ILVL = 300
 COOLDOWN_PER_MEME = 300
 
-BAN_ME_ROLE = 1476588775105757254
-BAN_ME_TEST_ROLE = 1477989468525953086
-FORBIDDEN_ROLE_IDS = {BAN_ME_ROLE, BAN_ME_TEST_ROLE}
-
 LOG_CHANNELS = {
     "No Pressure - EU": 1477048139398647909,
     "dukes-bot-testing": 1457285641976152085,
 }
 
+def timestamp_str():
+    dt_now = datetime.now(timezone.utc)
+    return (
+        f"{dt_now.year}-{dt_now.month}-{dt_now.day}_{dt_now.hour}-{dt_now.minute}-{dt_now.second}"
+    )
+
+
 def setup_logging():
     """Setup logger."""
     log_folder = Path(__file__).parent
-    dt_now = datetime.now(timezone.utc)
-    datetime_str = (
-        f"{dt_now.year}-{dt_now.month}-{dt_now.day}_{dt_now.hour}-{dt_now.minute}-{dt_now.second}"
-    )
+    datetime_str = timestamp_str()
     if log_folder is not None and log_folder.exists():
         log_file_path = log_folder / f"{datetime_str}_nop_bot.log"
         logging.basicConfig(
@@ -86,7 +95,9 @@ def setup_logging():
             handlers=[logging.FileHandler(log_file_path, encoding="utf-8")],
         )
 
+
 setup_logging()
+
 
 def flexible_prefix(bot, message):
     pattern = rf"^<@{BOT_ID}>([ !]*)"
@@ -96,15 +107,18 @@ def flexible_prefix(bot, message):
         return match.group(0)
     return commands.when_mentioned(bot, message)
 
+
 bot = commands.Bot(
     command_prefix=flexible_prefix,
     intents=intents,
     help_command=None
 )
 
+
 @bot.check
 def check_commands(ctx: commands.Context):
     return type(ctx.channel) is discord.channel.DMChannel or (type(ctx.channel) is discord.channel.TextChannel and ctx.channel.name in CHANNEL_WHITELIST) or type(ctx.channel is discord.channel.ForumChannel)
+
 
 def not_dm():
     def predicate(ctx):
@@ -118,7 +132,7 @@ async def on_member_update(before: discord.Member, after: discord.Member):
     after_roles = {r.id for r in after.roles}
 
     added_roles = after_roles - before_roles
-    forbidden_added = added_roles & FORBIDDEN_ROLE_IDS
+    forbidden_added = added_roles & FORBIDDEN_ROLE
 
     log_channel = LOG_CHANNELS.get(after.guild.name)
     if forbidden_added and log_channel is not None:
@@ -127,10 +141,10 @@ async def on_member_update(before: discord.Member, after: discord.Member):
         try:
             await after.remove_roles(*roles_to_remove, reason="Forbidden role removed before auto-ban")  # type: ignore
         except Exception as e:
-            logging.info(f"Failed to remove roles from {after}: {e}")
+            logger.info(f"Failed to remove roles from {after}: {e}")
 
         log_channel = after.guild.get_channel(log_channel)
-        logging.info(log_channel)
+        logger.info(log_channel)
         if log_channel:
             await log_channel.send(  # type: ignore
                 f"{after.mention} gained a forbidden role and was banned.\n"
@@ -139,7 +153,74 @@ async def on_member_update(before: discord.Member, after: discord.Member):
                 f"- Roles: `{str([role.name for role in after.roles])[1:-1]}`"
             )
         await after.ban(reason="Auto-ban: forbidden role added")
-        logging.info(f"Banned user {after.display_name} {after.id}")
+        logger.info(f"Banned user {after.display_name} {after.id}")
+
+
+# --- Role showing new joiner
+@bot.event
+async def on_member_join(discord_user: discord.Member):
+    new_user_role = bot.get_guild(GUILD_ID).get_role(NEW_USER_ROLE) # type: ignore
+    logger.info(f"new_user_role: {new_user_role}")
+
+    if NEW_USER_ROLE > 0:
+        if new_user_role is None:
+                logger.warning(f"Could not find role with ID {NEW_USER_ROLE}")
+                return
+        await discord_user.add_roles(new_user_role)
+        add_entry(NEW_USER_FILE, discord_user.id)
+        logger.info(f"New user assigned new role: {discord_user.display_name}, {discord_user.id}")
+
+
+@tasks.loop(seconds=NEW_USER_FREQUENCY)
+async def check_new_users():
+    entries = load_entries(NEW_USER_FILE)
+    now = datetime.now(timezone.utc)
+    new_user_role = bot.get_guild(GUILD_ID).get_role(NEW_USER_ROLE) # type: ignore
+
+    kept = []
+    for entry in entries:
+        user_id = entry["name"]
+        ts_str = entry["timestamp"]
+
+        user_join_time = datetime.strptime(ts_str, "%Y-%m-%d_%H-%M-%S").replace(tzinfo=timezone.utc)
+        time_check = (now - user_join_time).total_seconds()
+
+        if time_check >= NEW_USER_DURATION:
+            guild = bot.get_guild(GUILD_ID)
+            member = guild.get_member(int(user_id)) # type: ignore
+            if member and new_user_role is not None:
+                await member.remove_roles(new_user_role, reason="New user role removed after timer")
+                logger.info(f"New user role removed after {NEW_USER_DURATION}: {entry["name"]}")
+        else:
+            kept.append(entry)
+
+    rewrite_entries(NEW_USER_FILE, kept)
+
+
+@bot.event
+async def on_ready():
+    check_new_users.start()
+
+
+def add_entry(path, name):
+    entry = {"name": name, "timestamp": timestamp_str()}
+    with open(path, "a") as f:
+        f.write(json.dumps(entry) + "\n")
+
+
+def load_entries(path):
+    entries = []
+    if not Path(path).exists():
+        return entries
+    with open(path) as f:
+        for line in f:
+            entries.append(json.loads(line))
+    return entries
+
+
+def rewrite_entries(path, entries):
+    with open(path, "w") as f:
+        f.writelines(json.dumps(entry) + "\n" for entry in entries)
 
 
 # --- Help
